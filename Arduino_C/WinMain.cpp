@@ -59,7 +59,7 @@ int CALLBACK WINAPI WinMain(
 	WinApi->Draw();
 
 	//Configurar_objetos();
-	//Eventos();
+	Eventos();
 
 	WinApi->Loop();
 

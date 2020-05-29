@@ -12,8 +12,8 @@ Win_Menu*	Menu1 = New_Menu();
 Win_MessageBox* Mensaje = New_MessageBox();
 
 // Objetos			
-Win_Button* Boton_Serie1 = New_Button();
-Win_Shape*  Placa		 = New_Shape();
+Win_Button* Boton_Iniciar = New_Button();
+Win_Shape*  Placa		  = New_Shape();
 std::vector <Win_Shape*> Pin;
 std::vector <Win_Label*> Label;
 
@@ -27,7 +27,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 	Menu1->Create(Frame1, "Menú", { "Menu 1", "-", "Salir" });
 
 	//Grupo1
-	//Boton_Serie1->Create(Frame1, "Boton 1", 20, 20);
+	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
+	
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
 	Placa->Set_BackColor(RGB(0, 100, 0));
@@ -117,12 +118,25 @@ void CrearObjetos(HINSTANCE hInstance) {
 		j++;
 	}
 
-
+	k = j;
+	l = 22;
 	for (int i = 0; i < 18; i++) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x+10)+(i * 10), y, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		// Etiquetas
+		Label.push_back(New_Label());
+		if (i == 0) Label[k]->Create(Frame1, "5V", (x+10)+(i*10) , y+20, 40, 10);
+		if (i == 17) Label[k]->Create(Frame1, "GND", (x + 10) + (i * 10), y + 20, 40, 10);
+		if ((i > 0) && (i < 17)) {
+			Label[k]->Create(Frame1, to_string(l), (x + 10) + (i * 10), y + 20, 40, 10);
+			l = l + 2;
+		}
+		Label[k]->Set_Text_Size(8);
+		Label[k]->Set_BackColor(RGB(0, 100, 0));
+		
 		j++;
+		k++;
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x + 10) + (i * 10), y+10, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));

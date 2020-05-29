@@ -4,9 +4,18 @@
     <Filter Include="Main">
       <UniqueIdentifier>{07642783-46cb-44e9-8d65-dd3eaee06c8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arduino">
+      <UniqueIdentifier>{5537024c-4f3e-4633-aeb7-e25087355f2a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>Arduino</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino.cpp">
       <Filter>Main</Filter>
     </ClCompile>
   </ItemGroup>
@@ -15,6 +24,9 @@
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="Eventos.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Arduino.h">
       <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
