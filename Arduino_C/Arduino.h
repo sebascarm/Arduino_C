@@ -1,5 +1,11 @@
 #pragma once
 
+#include <Windows.h>  // Para sleep
+#include <string>
+using namespace std;
+
+
+
 #define INPUT "INPUT"
 #define OUTPUT "OUTPUT"
 #define INPUT_PULLUP "INPUT_PULLUP"
@@ -9,12 +15,11 @@
 #define A0 0
 #define delay Sleep
 
+
+
 void setup();
 void loop();
 
-//***************************************
-//**** CLASE SERIAL 				 ****
-//***************************************
 class _Serial {
 public:
 	void begin(int x);
@@ -24,29 +29,7 @@ public:
 	//void println(int x);
 };
 
-void _Serial::begin(int x) {
-	int a = 10;
-}
-
-_Serial Serial;
-
-
-//***************************************
-//**** PINMODE 						 ****
-//***************************************
-void pinMode(int Pin, string Conector) {
-	//cout << "PIN: " << Pin << " TIPO: " << Conector << endl;
-}
-//***************************************
-//**** DIGITAL WRITE				 ****
-//***************************************
-void digitalWrite(int Pin, bool Value) {
-	//cout << "> PIN: " << Pin << " " << Value << endl;
-}
-
-//***************************************
-//**** ANALOG READ					 ****
-//***************************************
-int analogRead(int Pin) {
-	//return atoi(V_INPUT.c_str());
-}
+void pinMode(int Pin, string Conector);
+void pinMode(int Pin, string Conector);
+void digitalWrite(int Pin, bool Value);
+int analogRead(int Pin);

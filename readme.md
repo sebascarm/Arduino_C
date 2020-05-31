@@ -1,5 +1,7 @@
-## Arduino_C 0.5
+## Arduino_C 0.6
 
+### 31/05/2020
+    - Sin error en compilacion
 ### 29/05/2020
     - Creacion
 

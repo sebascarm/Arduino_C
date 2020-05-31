@@ -2,6 +2,8 @@
 
 #include "Arduino.h" 
 
+
+
 void Iniciar() {
 	string Comando, Valor;
 	
@@ -14,6 +16,7 @@ void Iniciar() {
 
 void  Eventos() {
 	Boton_Iniciar->Assign_Event_Click(Iniciar);
+	
 }
 
 

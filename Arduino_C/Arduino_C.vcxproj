@@ -191,6 +191,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Arduino.h" />
+    <ClInclude Include="Arduino_PC.h" />
     <ClInclude Include="Eventos.h" />
     <ClInclude Include="Frame.h" />
   </ItemGroup>

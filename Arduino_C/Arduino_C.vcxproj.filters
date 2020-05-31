@@ -29,6 +29,9 @@
     <ClInclude Include="Arduino.h">
       <Filter>Main</Filter>
     </ClInclude>
+    <ClInclude Include="Arduino_PC.h">
+      <Filter>Main</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\readme.md" />
