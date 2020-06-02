@@ -5,8 +5,7 @@
 
 
 void Iniciar() {
-	Pin[0]->Change_BackColor(RGB(250, 0, 0));
-	
+	Pin[0]->Set_BackColor(RGB(250, 0, 0));
 }
 
 
