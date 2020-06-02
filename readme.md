@@ -1,6 +1,7 @@
-## Arduino_C 0.6
+## Arduino_C 0.7
 
-
+### 31/05/2020
+    - Cambio de color del Shap
 ### 31/05/2020
     - Sin error en compilacion
 ### 29/05/2020

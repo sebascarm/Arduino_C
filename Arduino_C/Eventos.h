@@ -5,7 +5,7 @@
 
 
 void Iniciar() {
-	string Comando, Valor;
+	Pin[0]->Change_BackColor(RGB(250, 0, 0));
 	
 }
 
