@@ -2,19 +2,16 @@
 
 #include "Arduino.h" 
 
-
-
-void Iniciar() {
-	Pin[0]->Set_BackColor(RGB(250, 0, 0));
+void Inicio() {
+	iniciar();
 }
-
 
 //******************************************************************//
 //**** ASIGNACION DE EVENTOS									****//
 //******************************************************************//
 
 void  Eventos() {
-	Boton_Iniciar->Assign_Event_Click(Iniciar);
+	Boton_Iniciar->Assign_Event_Click(Inicio);
 	
 }
 

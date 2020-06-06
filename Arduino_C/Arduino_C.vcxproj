@@ -103,7 +103,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\;..\..\Componentes\Funciones\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,7 +121,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\;..\..\Componentes\Funciones\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,7 +141,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\;..\..\Componentes\Funciones\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +163,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\Componentes\WinApi\;..\..\Componentes\Funciones\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,6 +175,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arduino.cpp" />
+    <ClCompile Include="C_Pote.cpp" />
+    <ClCompile Include="C_Switch.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="WinMain.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreaded</RuntimeLibrary>
@@ -192,6 +194,8 @@
   <ItemGroup>
     <ClInclude Include="Arduino.h" />
     <ClInclude Include="Arduino_PC.h" />
+    <ClInclude Include="C_Pote.h" />
+    <ClInclude Include="C_Switch.h" />
     <ClInclude Include="Eventos.h" />
     <ClInclude Include="Frame.h" />
   </ItemGroup>

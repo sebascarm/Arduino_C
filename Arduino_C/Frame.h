@@ -1,6 +1,8 @@
 #pragma once
 
 #include "WinApi.h"
+#include "c_switch.h"
+#include "C_Pote.h"
 
 //******************************************************************//
 //**** OBJETOS GLOBALES											****//
@@ -12,10 +14,15 @@ Win_Menu*	Menu1 = New_Menu();
 Win_MessageBox* Mensaje = New_MessageBox();
 
 // Objetos			
-Win_Button* Boton_Iniciar = New_Button();
-Win_Shape*  Placa		  = New_Shape();
+Win_Button* Boton_Iniciar		= New_Button();
+Win_MultiLine* Text_SerieIN		= New_MultiLine();
+Win_MultiLine* Text_SerieOUT	= New_MultiLine();
+Win_Shape*  Placa				= New_Shape();
 std::vector <Win_Shape*> Pin;
 std::vector <Win_Label*> Label;
+// Objetos compuestos
+C_Switch CSwitch[3];
+C_Pote	 CPote[3];
 
 //******************************************************************//
 //**** CREAR OBJETOS											****//
@@ -23,12 +30,20 @@ std::vector <Win_Label*> Label;
 void CrearObjetos(HINSTANCE hInstance) {
 	//Principal
 	WinApi->Create(hInstance);
-	Frame1->Create(WinApi, "Titulo", 50, 50, 600, 400, true);
+	Frame1->Create(WinApi, "Titulo", 50, 50, 800, 540, true);
 	Menu1->Create(Frame1, "Menú", { "Menu 1", "-", "Salir" });
 
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
-	
+	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 320);
+	Text_SerieOUT->Create(Frame1, "", 540, 30, 200, 320);
+	//Compuestos
+	CSwitch[0].Create(Frame1, "Switch 1", 50, 380);
+	CSwitch[1].Create(Frame1, "Switch 2", 50, 420);
+	CSwitch[2].Create(Frame1, "Switch 3", 50, 460);
+	CPote[0].Create(Frame1, "Pote 1", 120, 380);
+
+		
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
 	Placa->Set_BackColor(RGB(0, 100, 0));

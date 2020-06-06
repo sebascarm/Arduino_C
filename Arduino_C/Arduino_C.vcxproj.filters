@@ -7,6 +7,9 @@
     <Filter Include="Arduino">
       <UniqueIdentifier>{5537024c-4f3e-4633-aeb7-e25087355f2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main\compuesto">
+      <UniqueIdentifier>{8fc0c092-e2c9-4377-83d8-695e7dce7fd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -17,6 +20,12 @@
     </ClCompile>
     <ClCompile Include="Arduino.cpp">
       <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Switch.cpp">
+      <Filter>Main\compuesto</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Pote.cpp">
+      <Filter>Main\compuesto</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="Arduino_PC.h">
       <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Switch.h">
+      <Filter>Main\compuesto</Filter>
+    </ClInclude>
+    <ClInclude Include="C_Pote.h">
+      <Filter>Main\compuesto</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

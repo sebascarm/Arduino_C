@@ -43,10 +43,10 @@
 
 #ifdef _DEBUG
 #pragma comment (lib, "WinApi_d.lib")
-
+#pragma comment (lib, "Funciones_d.lib")
 #else
 #pragma comment (lib, "WinApi.lib")
-
+#pragma comment (lib, "Funciones.lib")
 #endif
 
 int CALLBACK WINAPI WinMain(
