@@ -9,8 +9,8 @@ class C_Menu : public Win_Menu, public C_Objeto {
 protected:
 	std::vector<Funcion_Puntero> vFunction_Click;
 	// Variables propias
-	int Elementos;
-	int ID_Funcion;			// Para llamar a la funcion adecuada
+	int Elementos = 0;
+	int ID_Funcion = 0;			// Para llamar a la funcion adecuada
 	std::vector <std::string> MenuText;
 	HMENU hMenubar	= nullptr;
 	HMENU hMenu		= nullptr;

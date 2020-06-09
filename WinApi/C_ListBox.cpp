@@ -11,7 +11,7 @@ void C_ListBox::Create(Win_Frame* pFrame, int x, int y, int ancho, int alto) {
 }
 
 int C_ListBox::Get_Row() {
-	return SendMessage(hWnd, LB_GETCURSEL, 0, 0);
+	return (int)SendMessage(hWnd, LB_GETCURSEL, 0, 0);
 }
 
 string C_ListBox::Get_Text() {
@@ -20,7 +20,7 @@ string C_ListBox::Get_Text() {
 	int length;
 	int row = this->Get_Row();
 	
-	length = SendMessage(hWnd, LB_GETTEXTLEN, (WPARAM)row, 0);
+	length = (int)SendMessage(hWnd, LB_GETTEXTLEN, (WPARAM)row, 0);
 	text = new char[length + 1];
 	SendMessage(hWnd, LB_GETTEXT, (WPARAM)row, (LPARAM)text);
 	//SendMessage(hWnd, LB_GETTEXT, row, (LPARAM)text);

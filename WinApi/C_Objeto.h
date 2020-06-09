@@ -19,7 +19,7 @@
 class C_Objeto {
 protected:
 	int	 ID			 = NULL;				// Numero de elemento en Windows (distinto al hWnd)
-	unsigned __int64 Elemento;				// Numero de elemento - distinto al ID
+	unsigned __int64 Elemento = 0;			// Numero de elemento - distinto al ID
 	HWND hWnd		 = nullptr;
 	HWND *hWnd_Padre = nullptr;
 	int	 x = 0, y = 0, ancho = 0, alto = 0;	// Posicion

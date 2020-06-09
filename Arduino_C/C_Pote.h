@@ -12,7 +12,7 @@ private:
 	Win_Button* Boton_menos = New_Button();
 	Win_Button* Boton_mas = New_Button();
 
-	int CentroX, CentroY;
+	int CentroX = 0, CentroY = 0;
 
 public:
 	void Create(Win_Frame* pFrame, string text, int x, int y);
