@@ -15,6 +15,7 @@ Win_MessageBox* Mensaje = New_MessageBox();
 
 // Objetos			
 Win_Button* Boton_Iniciar		= New_Button();
+Win_TextBox* Text_Loop			= New_TextBox();
 Win_MultiLine* Text_SerieIN		= New_MultiLine();
 Win_MultiLine* Text_SerieOUT	= New_MultiLine();
 Win_Shape*  Placa				= New_Shape();
@@ -35,6 +36,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
+	Text_Loop->Create(Frame1, "10", 260, 52);
 	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 320);
 	Text_SerieOUT->Create(Frame1, "", 540, 30, 200, 320);
 	//Compuestos

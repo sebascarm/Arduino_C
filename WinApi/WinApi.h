@@ -98,6 +98,7 @@ public:
 class Win_TextBox {
 public:
 	virtual void	Create(Win_Frame* _Frame, string Text, int x, int y, int ancho = 60, int alto = 20) = 0;
+	virtual int		Get_ID() = 0;
 	virtual string	Get_Text()  = 0;
 	virtual int		Get_Pos_X() = 0;
 	virtual int		Get_Pos_Y() = 0;
@@ -105,6 +106,8 @@ public:
 	virtual void	Set_Pos(int x = -1, int y = -1, int ancho = -1, int alto = -1) = 0;
 	virtual void	Set_Enable() = 0;
 	virtual void	Set_Disable() = 0;
+	// Asignacion de eventos
+	virtual void	Assign_Event_Text_Change_ID(void(*Function)(int ID)) = 0;
 };
 // MENU				
 class Win_Menu {

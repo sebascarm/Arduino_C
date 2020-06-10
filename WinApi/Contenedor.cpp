@@ -126,15 +126,15 @@ void Contenedor::Draw() {
 
 int Contenedor::Get_ID() {
 	switch (Tipo) {
-	case TipoObjeto::T_BUTTON: return pButton->ID; break;
-	case TipoObjeto::T_LABEL: return pLabel->ID; break;
-	case TipoObjeto::T_GROUPBOX: pGroupBox->ID;	break;
-	case TipoObjeto::T_TEXTBOX:	pTextBox->ID; break;
-	case TipoObjeto::T_MENU: return pMenu->ID; break;
-	case TipoObjeto::T_MULTILINE: pMultiLine->ID; break;
-	case TipoObjeto::T_LISTBOX:	return pListBox->ID; break;
-	case TipoObjeto::T_RICHTEXT: pRichText->ID;	break;
-	case TipoObjeto::T_SHAPE: pShape->ID; break;
+	case TipoObjeto::T_BUTTON: return pButton->Get_ID(); break;
+	case TipoObjeto::T_LABEL: return pLabel->Get_ID(); break;
+	case TipoObjeto::T_GROUPBOX: pGroupBox->Get_ID();	break;
+	case TipoObjeto::T_TEXTBOX:	pTextBox->Get_ID(); break;
+	case TipoObjeto::T_MENU: return pMenu->Get_ID(); break;
+	case TipoObjeto::T_MULTILINE: pMultiLine->Get_ID(); break;
+	case TipoObjeto::T_LISTBOX:	return pListBox->Get_ID(); break;
+	case TipoObjeto::T_RICHTEXT: pRichText->Get_ID(); break;
+	case TipoObjeto::T_SHAPE: pShape->Get_ID(); break;
 	default:
 		return 0;
 	}

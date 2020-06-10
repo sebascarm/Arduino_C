@@ -5,6 +5,7 @@
 #include "C_Menu.h"
 #include "C_ListBox.h"
 #include "C_Shape.h"
+#include "C_TextBox.h"
 
 #include <string.h>
 
@@ -162,14 +163,18 @@ LRESULT CALLBACK C_WinApi::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 	// RECEPCION DE COMANDOS								
 	case WM_COMMAND: {
 		for (int i = 0; i < Elementos; i++) {
-			// **** Envio de click a botones				
-			//if (CONTENEDOR[i].Tipo == TipoObjeto::T_BUTTON) {
-			//	// Buscamos el boton que recibe el evento	
-			//	if (CONTENEDOR[i].Get_ID() == ID) {
-			//		CONTENEDOR[i].pButton->Event_Click();		// Enviamos el click
-			//		OutputDebugString("--click--\n");
-			//	}
-			//}
+			
+			// **** Se debe mejorar el rendimiento via notification
+			// **** Envio de click a botones (Evento propio)
+			// **** Envio de change a textbox				
+			if (CONTENEDOR[i].Tipo == TipoObjeto::T_TEXTBOX) {
+				int cont_ID = CONTENEDOR[i].Get_ID();
+				if (CONTENEDOR[i].Get_ID() == ID){
+					if (EN_CHANGE == Notificacion) {
+						CONTENEDOR[i].pTextBox->Event_Text_Change();
+					}
+				}
+			}
 			// **** Envio de click a Menu					
 			if (CONTENEDOR[i].Tipo == TipoObjeto::T_MENU) {
 				//Recorremos los elementos del menu			

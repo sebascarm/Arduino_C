@@ -1,7 +1,9 @@
-## WinApi v3.3
-    
+## WinApi v3.4
+
+### 10/06/2020    
+    - TextBox v2.0 (Evento Text Change + ID)
 ### 04/06/2020
-    - Button v2.0 (Eventos Press y Release)
+    - Button v2.0 (Eventos Press y Release + ID)
 ### 02/06/2020
     - Shape v1.2 (Cambio de color)
 ### 28/05/2020
