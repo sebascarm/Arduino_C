@@ -1,14 +1,19 @@
 #include "Arduino.h"
-
+#include "Funciones.h"
 #include <time.h>
 
 #include "WinApi.h"
 #include "c_switch.h"
+#include "C_Pote.h"
 
 extern std::vector <Win_Shape*> Pin;
 extern Win_MultiLine* Text_SerieIN;
 extern Win_MultiLine* Text_SerieOUT;
 extern C_Switch CSwitch[3];
+extern C_Pote CPote[3];
+
+extern int LOOPS;
+extern int DELAY;
 
 unsigned long tiempo = 0;
 clock_t reloj_ini;
@@ -20,10 +25,13 @@ void iniciar() {
 	Text_SerieOUT->Add_Line("SETUP()");
 	setup();
 	Text_SerieOUT->Add_Line("LOOP()");
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < LOOPS; i++) {
 		loop();
+		serialEvent();	// omitir si no esta
+		Sleep(DELAY);
 	}
 	Text_SerieOUT->Add_Line("END()");
+
 }
 
 
@@ -46,6 +54,39 @@ void _Serial::println(int x){
 	Text_SerieOUT->Add_Line(to_string(x));
 }
 //***************************************
+bool _Serial::available(){
+	return false;
+}
+//***************************************
+char _Serial::read(){
+	char tmp = '\n';
+	return tmp;
+}
+//***************************************
+String::String(){
+	this->Text = "";
+}
+String::String(string Text){
+	this->Text = Text;
+}
+String::String(const char* Text) {
+	this->Text = Text;
+}
+String& String::operator=(const char* Text) {
+	return *this;
+}
+
+void String::toCharArray(const char* Buffer, int Leng) {
+	//falta truncar
+	Buffer = Text.c_str();
+}
+String& String::operator+=(char Char){
+	string tmp = this->Text + Char;
+	this->Text = tmp;
+	return *this;
+}
+
+//***************************************
 void pinMode(int pin, string Value) {
 	int PinReal = ObtenerPin(pin);
 	if (pin > 99) {
@@ -58,6 +99,8 @@ void pinMode(int pin, string Value) {
 	} else {
 		Pin[PinReal]->Set_BackColor(RGB(150, 100, 100));
 	}
+	// aveces no se dibuja todo
+	Sleep(1);
 }
 //***************************************
 void digitalWrite(int pin, bool Value) {
@@ -92,13 +135,33 @@ int digitalRead(int pin) {
 }
 //***************************************
 int analogRead(int pin) {
-	return 0;
+	int PinReal = ObtenerPin(pin);
+	int Valor = 0;
+	// recorrer			Potes	
+	for (int i = 0; i < 3; i++) {
+		if (CPote[i].Pin == pin) {
+			Valor = CPote[i].Value;
+		}
+	}
+	return Valor;
+}
+
+
+//***************************************
+void delayMicroseconds(int Value){
+	double Micro = Value / 1000;
+	Sleep(Micro);
 }
 //***************************************
 unsigned long millis() {
 	reloj_fin = clock();
 	reloj_dif = reloj_fin - reloj_ini;
 	return (unsigned long)reloj_dif;
+}
+
+//***************************************
+int map(int Value, int fromLow, int fromHigh, int toLow, int toHigh){
+	return Funciones::Mapeo(Value, fromLow, fromHigh, toLow, toHigh);
 }
 
 //***************************************

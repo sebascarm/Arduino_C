@@ -23,10 +23,13 @@ private:
 	
 	static void	Event_Click_menos(int ID);
 	static void	Event_Click_mas(int ID);
+	static void	Event_Text(int ID);
+	static void Redibujado(C_Pote* pPote);
 
 public:
 	int	BOT_ID_menos = 0;
 	int	BOT_ID_mas	 = 0;
+	int TEX_ID		 = 0;
 	void Create(Win_Frame* pFrame, string text, int x, int y);
 	int Pin = 0;
 	int Value = 0; // 0 - 1024	

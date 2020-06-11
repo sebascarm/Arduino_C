@@ -56,4 +56,3 @@ C_Switch* Obtener_Switch(int ID_Elemento) {
 	}
 }
 
-

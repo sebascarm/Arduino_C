@@ -1,8 +1,9 @@
 //######################################################//
-// Shape v1.3											//
+// Shape v1.4											//
 //######################################################//
 // ULTIMA MODIFICACION DOCUMENTADA                      //
-// 03/05/2020                                           //
+// 11/06/2020                                           //
+// Posiblidad de cambiar la posicion del grafico 		//
 // Correccion en el redibujado							//
 // Cambio de color										//
 // Fix Varios graficos									//
@@ -25,6 +26,7 @@ protected:
 	COLORREF BackColor = RGB(255,0,0);
 	POINT	 Poligono[5] = { 0,0,0,0,0,0,0,0,0,0 };	// Para poligonos
 
+	void	 Redibujado();
 public:
 	void Create(Win_Frame* pFrame, S_Style Style, int x, int y, int ancho, int alto);
 	// Propiedades	
@@ -35,7 +37,7 @@ public:
 	bool	Redibujar = false; // utilizado para enviar redibujado
 	// Metodos		
 	void	Set_Text(string Text) { C_Objeto::Set_Text(Text); }
-	void	Set_Pos(int x, int y, int ancho, int alto) { C_Objeto::Set_Pos(x, y, ancho, alto); }
+	void	Set_Pos(int x, int y, int ancho, int alto); // parcialmente modificado
 	void	Set_Enable() { C_Objeto::Set_Enable(); }
 	void	Set_Disable() { C_Objeto::Set_Disable(); }
 	// Metodos propios 

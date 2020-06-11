@@ -9,25 +9,33 @@ void C_Shape::Create(Win_Frame* pFrame, S_Style Style, int x, int y, int ancho, 
     this->Redibujar = true;
 }
 
+void C_Shape::Set_Pos(int x, int y, int ancho, int alto) {
+    C_Objeto::Set_Pos(x, y, ancho, alto);
+    Redibujado();
+}
+
 void C_Shape::Set_Color(COLORREF Color){
     this->Color = Color;
-    if (this->Iniciado) {
-        // Forzamos el redibujado al no ser el arranque
-        this->Redibujar = true;
-        RedrawWindow(*hWnd_Padre, 0, 0, RDW_INVALIDATE);
-    }
+    Redibujado();
 }
 
 void C_Shape::Set_BackColor(COLORREF Color){
     this->BackColor = Color;
+    Redibujado();
+}
+
+// Funcion interna para llamar al redibujado
+void C_Shape::Redibujado(){
     if (this->Iniciado) {
         // Forzamos el redibujado al no ser el arranque
         this->Redibujar = true;
-        const RECT rect = { x,y,x+ancho,y+alto };
+        const RECT rect = { x,y,x + ancho,y + alto }; //son posiciones absolutas
         //InvalidateRect(hWnd, &rect, TRUE);
         RedrawWindow(*hWnd_Padre, &rect, 0, RDW_INVALIDATE);
     }
 }
+
+
 
 void C_Shape::Set_FreePoints(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5){
     this->Poligono[0] = { x+x1,y+y1 };

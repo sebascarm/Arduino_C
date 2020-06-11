@@ -4,8 +4,6 @@
 #include <string>
 using namespace std;
 
-
-
 #define INPUT "INPUT"
 #define OUTPUT "OUTPUT"
 #define INPUT_PULLUP "INPUT_PULLUP"
@@ -29,12 +27,13 @@ using namespace std;
 #define A14 114
 #define A15 115
 
-#define delay Sleep
+#define delay	Sleep
 
 void iniciar();
 
 void setup();
 void loop();
+void serialEvent();
 
 class _Serial {
 public:
@@ -43,15 +42,109 @@ public:
 	void print(int x);
 	void println(string x);
 	void println(int x);
+
+	bool available();
+	char read();
 };
 
-void pinMode(int Pin, string Conector);
-void pinMode(int Pin, string Conector);
-void digitalWrite(int Pin, bool Value);
-void analogWrite(int pin, int Value);
-int digitalRead(int Pin);
-int analogRead(int Pin);
 
+
+
+class String {
+private:
+	string Text;
+public:
+	String();
+	String(string Text);
+	String(const char* Text);
+	String& operator = (const char* Text);
+	String& operator += (char Char);
+	void toCharArray(const char* Buffer, int Leng);
+};
+
+
+
+//DIGITAL I/O					
+int		digitalRead(int Pin);
+void	digitalWrite(int Pin, bool Value);
+void	pinMode(int Pin, string Conector);
+//ANALOG I/O					
+int analogRead(int Pin);
+void analogWrite(int pin, int Value);
+
+//Advanced I / O				
+//	noTone()		
+//	pulseIn()		
+//	pulseInLong()	
+//	shiftIn()		
+//	shiftOut()		
+//	tone()			
+
+//Time							
+//	delay()				
+void delayMicroseconds(int Value);
+//	micros()			
 unsigned long millis();
+
+//Math							
+//	abs()		
+//	constrain()	
+int	map(int Value, int fromLow, int fromHigh, int toLow, int toHigh);
+//	max()		
+//	min()		
+//	pow()		
+//	sq()		
+//	sqrt()		
+
+//Trigonometry					
+//	cos()
+//	sin()
+//	tan()
+
+//Characters					
+//	isAlpha()
+//	isAlphaNumeric()
+//	isAscii()
+//	isControl()
+//	isDigit()
+//	isGraph()
+//	isHexadecimalDigit()
+//	isLowerCase()
+//	isPrintable()
+//	isPunct()
+//	isSpace()
+//	isUpperCase()
+//	isWhitespace()
+
+//Random Numbers				
+//	random()
+//	randomSeed()
+//	Bitsand Bytes
+//	bit()
+//	bitClear()
+//	bitRead()
+//	bitSet()
+//	bitWrite()
+//	highByte()
+//	lowByte()
+
+//External Interrupts			
+//	attachInterrupt()
+//	detachInterrupt()
+//	Interrupts
+//	interrupts()
+//	noInterrupts()
+
+//Communication					
+//	Serial
+//	Stream
+//	USB
+//	Keyboard
+//	Mouse
+
+
+
+
+
 
 int ObtenerPin(int Pin);

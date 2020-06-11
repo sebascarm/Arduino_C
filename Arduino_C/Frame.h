@@ -5,6 +5,13 @@
 #include "C_Pote.h"
 
 //******************************************************************//
+//**** VARIABLES GLOBALES										****//
+//******************************************************************//
+
+int LOOPS = 100000;	// Cantidad de Loops	
+int DELAY = 10;		// Delay entre loops	
+
+//******************************************************************//
 //**** OBJETOS GLOBALES											****//
 //******************************************************************//
 Win_Api*	WinApi = New_Api();
@@ -14,11 +21,15 @@ Win_Menu*	Menu1 = New_Menu();
 Win_MessageBox* Mensaje = New_MessageBox();
 
 // Objetos			
-Win_Button* Boton_Iniciar		= New_Button();
-Win_TextBox* Text_Loop			= New_TextBox();
-Win_MultiLine* Text_SerieIN		= New_MultiLine();
-Win_MultiLine* Text_SerieOUT	= New_MultiLine();
-Win_Shape*  Placa				= New_Shape();
+Win_Button*		Boton_Iniciar	= New_Button();
+Win_Button*		Boton_Parar		= New_Button();
+Win_Label*		Label_Loop		= New_Label();
+Win_TextBox*	Text_Loop		= New_TextBox();
+Win_Label*		Label_Delay		= New_Label();
+Win_TextBox*	Text_Delay		= New_TextBox();
+Win_MultiLine*	Text_SerieIN	= New_MultiLine();
+Win_MultiLine*	Text_SerieOUT	= New_MultiLine();
+Win_Shape*		Placa			= New_Shape();
 std::vector <Win_Shape*> Pin;
 std::vector <Win_Label*> Label;
 // Objetos compuestos
@@ -33,10 +44,14 @@ void CrearObjetos(HINSTANCE hInstance) {
 	WinApi->Create(hInstance);
 	Frame1->Create(WinApi, "Titulo", 50, 50, 800, 540, true);
 	Menu1->Create(Frame1, "Menú", { "Menu 1", "-", "Salir" });
-
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
-	Text_Loop->Create(Frame1, "10", 260, 52);
+	Boton_Parar->Create(Frame1, "Detener", 260, 52);
+	Label_Loop->Create(Frame1, "Loops", 260, 74);
+	Text_Loop->Create(Frame1, "100000", 260, 90);
+	Label_Delay->Create(Frame1, "Delay", 260, 114);
+	Text_Delay->Create(Frame1, "10", 260, 130);
+
 	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 320);
 	Text_SerieOUT->Create(Frame1, "", 540, 30, 200, 320);
 	//Compuestos
@@ -44,6 +59,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CSwitch[1].Create(Frame1, "Switch 2", 50, 420);
 	CSwitch[2].Create(Frame1, "Switch 3", 50, 460);
 	CPote[0].Create(Frame1, "Pote 1", 120, 380);
+	CPote[1].Create(Frame1, "Pote 2", 120, 420);
+	CPote[2].Create(Frame1, "Pote 3", 120, 460);
 
 		
 	int x = 50, y=30;

@@ -184,8 +184,10 @@ void C_Objeto::Set_Text_Size(int Text_Size){
 void C_Objeto::Set_Pos(int x, int y, int ancho, int alto) {
 	if (x == -1) { x = Get_Pos_X(); }
 	if (y == -1) { y = Get_Pos_Y(); }
-	if (ancho == -1) { ancho = this->ancho; }
-	if (alto == -1) { alto = this->alto; }
+	this->x = x; this->y = y; this->ancho = ancho; this->alto = alto;
+	//Permitimos dimensiones negativas			
+	//if (ancho == -1) { ancho = this->ancho; }	
+	//if (alto == -1) { alto = this->alto; }	
 	SetWindowPos(hWnd, 0, x, y, ancho, alto, 0);
 }
 

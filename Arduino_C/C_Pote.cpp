@@ -4,8 +4,8 @@
 
 #define PI 3.141592653589793
 
-std::vector <C_Pote*> p_POTE;				// Puntero Matriz Pote
-C_Pote* Obtener_Pote(int ID_Boton);			// Funcion Estatica		
+std::vector <C_Pote*> p_POTE;				// Puntero Matriz Pote	
+C_Pote* Obtener_Pote(int ID_Elemento);		// Funcion Estatica		
 C_Pote* pPote;								// Puntero Estatico		
 
 void C_Pote::Create(Win_Frame* pFrame, string text, int x, int y) {
@@ -22,13 +22,43 @@ void C_Pote::Create(Win_Frame* pFrame, string text, int x, int y) {
 
 	BOT_ID_menos = Boton_menos->Get_ID();
 	BOT_ID_mas	 = Boton_mas->Get_ID();
-	
+	TEX_ID		 = Textbox->Get_ID();
+		
 	p_POTE.push_back(this);
 
 	Boton_menos->Assign_Event_Click_ID(Event_Click_menos);
 	Boton_mas->Assign_Event_Click_ID(Event_Click_mas);
-
+	Textbox->Assign_Event_Text_Change_ID(Event_Text);
 }
+
+// Funciones estaticas				
+void C_Pote::Event_Click_menos(int ID) {
+	pPote = Obtener_Pote(ID);
+	pPote->Value = pPote->Value - 50;
+	if (pPote->Value < 0) pPote->Value = 0;
+	Redibujado(pPote);
+}
+
+void C_Pote::Event_Click_mas(int ID) {
+	pPote = Obtener_Pote(ID);
+	pPote->Value = pPote->Value + 50;
+	if (pPote->Value > 1024) pPote->Value = 1024;
+	Redibujado(pPote);
+}
+
+void C_Pote::Event_Text(int ID) {
+	pPote = Obtener_Pote(ID);
+	string text = pPote->Textbox->Get_Text();
+	pPote->Pin = Funciones::To_Integer(text);
+}
+
+void C_Pote::Redibujado(C_Pote* pPote) {
+	float Angulo = Funciones::Mapeo((double)pPote->Value, 0, 1024, -20, -340);
+	Coord SLinea = LineaAngular(Angulo, 15);
+	pPote->Circulo->Set_Pos(pPote->CentroX - 15, pPote->CentroY - 15, 30, 30);
+	pPote->Linea->Set_Pos(pPote->CentroX, pPote->CentroY, SLinea.x, SLinea.y);
+}
+
 Coord C_Pote::LineaAngular(float angulo, int longitud) {
 	double anguloRad = angulo * PI / 180;
 	int x, y;
@@ -37,30 +67,12 @@ Coord C_Pote::LineaAngular(float angulo, int longitud) {
 	return { x,y };
 }
 
-// Funciones estaticas				
-void C_Pote::Event_Click_menos(int ID) {
-	pPote = Obtener_Pote(ID);
-	pPote->Value--;
-	string text = pPote->Textbox->Get_Text();
-	pPote->Pin = Funciones::To_Integer(text);
-	float Angulo = Funciones::Mapeo((double)pPote->Value, 0, 1024, -20, -340);
-	Coord SLinea = LineaAngular(Angulo, 15);
-	pPote->Linea->Set_Pos(pPote->CentroX, pPote->CentroY, SLinea.x, SLinea.y);
-}
-
-void C_Pote::Event_Click_mas(int ID) {
-	pPote = Obtener_Pote(ID);
-	pPote->Value++;
-	string text = pPote->Textbox->Get_Text();
-	pPote->Pin = Funciones::To_Integer(text);
-}
-
-
-
-C_Pote* Obtener_Pote(int ID_Boton) {
+C_Pote* Obtener_Pote(int ID_Elemento) {
 	int cant = p_POTE.size();
 	for (int i = 0; i < cant; i++) {
-		if ((p_POTE[i]->BOT_ID_menos == ID_Boton) || (p_POTE[i]->BOT_ID_mas == ID_Boton)) {
+		if ((p_POTE[i]->BOT_ID_menos== ID_Elemento) || 
+			(p_POTE[i]->BOT_ID_mas	== ID_Elemento) || 
+			(p_POTE[i]->TEX_ID		== ID_Elemento)) {
 			return p_POTE[i]; // Retorna el puntero al switch
 		}
 	}
