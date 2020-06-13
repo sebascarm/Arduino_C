@@ -5,10 +5,11 @@
 
 
 void Inicio() {
+	STOP = false;
 	iniciar();
 }
 void Stop() {
-
+	STOP = true;
 }
 void Loop(int ID) {
 	string Loops = Text_Loop->Get_Text();
@@ -17,6 +18,19 @@ void Loop(int ID) {
 void Delay(int ID) {
 	string Retardo = Text_Delay->Get_Text();
 	DELAY = Funciones::To_Integer(Retardo);
+}
+void TextSerial(int ID) {
+	string Texto;
+	char TextoCh;
+	Texto = Text_Serial->Get_Text();
+	if (Texto.length() > 0) {
+		TextoCh = Text_Serial->Get_Text().back();
+		BUFFERSERIE = BUFFERSERIE + TextoCh;
+		if (TextoCh == '\n') {
+			Text_SerieIN->Add_Line(Texto);
+			Text_Serial->Set_Text("");
+		}
+	}
 }
 
 //******************************************************************//
@@ -28,6 +42,7 @@ void  Eventos() {
 	Boton_Parar->Assign_Event_Click(Stop);
 	Text_Loop->Assign_Event_Text_Change_ID(Loop);
 	Text_Delay->Assign_Event_Text_Change_ID(Delay);
+	Text_Serial->Assign_Event_Text_Change_ID(TextSerial);
 }
 
 
@@ -38,4 +53,3 @@ void  Eventos() {
 void Configurar_objetos() {
 	
 }
-

@@ -41,7 +41,12 @@ void C_Switch::Event_Click(int ID) {
 void C_Switch::Event_Text(int ID){
 	pSwitch = Obtener_Switch(ID);
 	string text = pSwitch->Textbox->Get_Text();
-	pSwitch->Pin = Funciones::To_Integer(text);
+	if (text == "") {
+		pSwitch->Pin = -1;
+	} else {
+		pSwitch->Pin = Funciones::To_Integer(text);
+	}
+
 }
 
 C_Switch* Obtener_Switch(int ID_Elemento) {

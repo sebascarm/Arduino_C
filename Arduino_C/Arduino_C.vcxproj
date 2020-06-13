@@ -176,6 +176,7 @@
   <ItemGroup>
     <ClCompile Include="Arduino.cpp" />
     <ClCompile Include="C_Pote.cpp" />
+    <ClCompile Include="C_ShiftOut.cpp" />
     <ClCompile Include="C_Switch.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="WinMain.cpp">
@@ -195,6 +196,7 @@
     <ClInclude Include="Arduino.h" />
     <ClInclude Include="Arduino_PC.h" />
     <ClInclude Include="C_Pote.h" />
+    <ClInclude Include="C_ShiftOut.h" />
     <ClInclude Include="C_Switch.h" />
     <ClInclude Include="Eventos.h" />
     <ClInclude Include="Frame.h" />

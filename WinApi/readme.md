@@ -1,4 +1,10 @@
-## WinApi v3.4
+## WinApi v3.5
+
+
+### 13/06/2020    
+    - Multiline v1.2 (Agregar texto sin salto de linea)
+    - Shape     v1.5 (Cambiar grosor del borde)
+    - TextBox   v2.2 (Admite Enter y Cambiar tamaño de texto)
 
 ### 10/06/2020    
     - TextBox v2.0 (Evento Text Change + ID)

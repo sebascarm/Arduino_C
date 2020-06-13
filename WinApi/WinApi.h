@@ -100,6 +100,7 @@ public:
 	virtual void	Create(Win_Frame* _Frame, string Text, int x, int y, int ancho = 60, int alto = 20) = 0;
 	virtual int		Get_ID() = 0;
 	virtual string	Get_Text()  = 0;
+	virtual void	Set_Text_Size(int Text_Size) = 0;
 	virtual int		Get_Pos_X() = 0;
 	virtual int		Get_Pos_Y() = 0;
 	virtual void	Set_Text(string Text) = 0;
@@ -125,7 +126,8 @@ public:
 	virtual void	Set_Pos(int x = -1, int y = -1, int ancho = -1, int alto = -1) = 0;
 	virtual void	Set_Enable() = 0;
 	virtual void	Set_Disable() = 0;
-	virtual void	Add_Line(string Texto) = 0;
+	virtual void	Add_Text(string Texto) = 0; // Agrega texto sin salto de linea
+	virtual void	Add_Line(string Texto) = 0; // Agrega texto con salto de linea
 };
 // MESSAGE BOX		
 class Win_MessageBox {
@@ -182,6 +184,7 @@ public:
 	virtual void Set_Disable() = 0;
 	// Metodos propios		
 	virtual void Set_Color(COLORREF Color) = 0;
+	virtual void Set_Border_Size(int Size) = 0;
 	virtual void Set_BackColor(COLORREF Color) = 0;
 	virtual void Set_FreePoints(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5) = 0;
 };

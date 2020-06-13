@@ -1,8 +1,9 @@
 //######################################################//
-// MultiLine v1.1										//
+// MultiLine v1.2										//
 //######################################################//
 // ULTIMA MODIFICACION DOCUMENTADA                      //
-// 15/03/2020                                           //
+// 13/06/2020                                           //
+// Posiblidad de agregar texto sin salto de linea		//
 // Correcion en resize									//
 // Creacion                                             //
 //######################################################//
@@ -25,6 +26,7 @@ public:
 	void	Set_Pos(int x, int y, int ancho, int alto) { C_Objeto::Set_Pos(x, y, ancho, alto); }
 	void	Set_Enable() { C_Objeto::Set_Enable(); }
 	void	Set_Disable() { C_Objeto::Set_Disable(); }
+	void	Add_Text(string Texto);
 	void	Add_Line(string Texto);
 };
 

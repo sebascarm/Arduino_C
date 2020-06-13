@@ -35,6 +35,11 @@ void setup();
 void loop();
 void serialEvent();
 
+
+int ObtenerPin(int Pin);
+void Conexiones();
+
+
 class _Serial {
 public:
 	void begin(int x);
@@ -43,8 +48,8 @@ public:
 	void println(string x);
 	void println(int x);
 
-	bool available();
-	char read();
+	int	 available();
+	int read();
 };
 
 
@@ -147,4 +152,3 @@ int	map(int Value, int fromLow, int fromHigh, int toLow, int toHigh);
 
 
 
-int ObtenerPin(int Pin);

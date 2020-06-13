@@ -1,8 +1,9 @@
 //######################################################//
-// Shape v1.4											//
+// Shape v1.5											//
 //######################################################//
 // ULTIMA MODIFICACION DOCUMENTADA                      //
-// 11/06/2020                                           //
+// 13/06/2020                                           //
+// Cambiar el grosor del borde					 		//
 // Posiblidad de cambiar la posicion del grafico 		//
 // Correccion en el redibujado							//
 // Cambio de color										//
@@ -25,7 +26,7 @@ protected:
 	COLORREF Color =  RGB(0, 0, 0) ;
 	COLORREF BackColor = RGB(255,0,0);
 	POINT	 Poligono[5] = { 0,0,0,0,0,0,0,0,0,0 };	// Para poligonos
-
+	int		 Grosor = 1;
 	void	 Redibujado();
 public:
 	void Create(Win_Frame* pFrame, S_Style Style, int x, int y, int ancho, int alto);
@@ -42,6 +43,7 @@ public:
 	void	Set_Disable() { C_Objeto::Set_Disable(); }
 	// Metodos propios 
 	void	Set_Color(COLORREF Color);
+	void	Set_Border_Size(int Size);
 	void	Set_BackColor(COLORREF Color);
 	void	Set_FreePoints(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int x5, int y5);
 	// Evento		(Llamado automatico al dibujar)

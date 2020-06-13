@@ -6,33 +6,48 @@
 #include "c_switch.h"
 #include "C_Pote.h"
 
+#include <map>
+
+
 extern std::vector <Win_Shape*> Pin;
 extern Win_MultiLine* Text_SerieIN;
 extern Win_MultiLine* Text_SerieOUT;
 extern C_Switch CSwitch[3];
 extern C_Pote CPote[3];
+//extern Win_TextBox* TextSerial;
 
-extern int LOOPS;
-extern int DELAY;
+extern int		LOOPS;
+extern int		DELAY;
+extern string	BUFFERSERIE;
+extern bool		STOP;
 
 unsigned long tiempo = 0;
 clock_t reloj_ini;
 clock_t reloj_fin;
 clock_t reloj_dif;
 
+typedef void (*PF)();
+std::map<std::string, PF> defined_functions;
+
+
 void iniciar() {
+	Conexiones();
+
 	reloj_ini = clock();
 	Text_SerieOUT->Add_Line("SETUP()");
 	setup();
 	Text_SerieOUT->Add_Line("LOOP()");
 	for (int i = 0; i < LOOPS; i++) {
+		if (STOP) break;
 		loop();
-		serialEvent();	// omitir si no esta
+		//serialEvent();	// omitir si no esta
 		Sleep(DELAY);
 	}
 	Text_SerieOUT->Add_Line("END()");
 
 }
+
+
 
 
 //***************************************
@@ -41,9 +56,11 @@ void _Serial::begin(int x) {
 }
 //***************************************
 void _Serial::print(string x) {
+	Text_SerieOUT->Add_Text(x);
 }
 //***************************************
 void _Serial::print(int x){
+	Text_SerieOUT->Add_Text(to_string(x));
 }
 //***************************************
 void _Serial::println(string x){
@@ -54,14 +71,31 @@ void _Serial::println(int x){
 	Text_SerieOUT->Add_Line(to_string(x));
 }
 //***************************************
-bool _Serial::available(){
-	return false;
+int _Serial::available(){
+	int longitud = BUFFERSERIE.length();
+	return longitud;
 }
 //***************************************
-char _Serial::read(){
-	char tmp = '\n';
-	return tmp;
+int _Serial::read() {
+	int longitud = BUFFERSERIE.length();
+	if (longitud) {
+		char tmp;
+		tmp = BUFFERSERIE.back();
+		BUFFERSERIE.resize(BUFFERSERIE.length() - 1);
+		return tmp;
+	} else {
+		return -1;
+	}
 }
+//***************************************
+/*char _Serial::read(){
+	int longitud = BUFFERSERIE.length();
+	if (longitud) {
+		char tmp;
+		tmp = BUFFERSERIE.back();
+		BUFFERSERIE.resize(BUFFERSERIE.length() - 1);
+		return tmp;
+}*/
 //***************************************
 String::String(){
 	this->Text = "";
@@ -129,6 +163,10 @@ int digitalRead(int pin) {
 	for (int i = 0; i < 3; i++) {
 		if (CSwitch[i].Pin == pin) {
 			Valor = CSwitch[i].State;
+			// pintar el pin de entrada
+			if (Valor) {
+				Pin[PinReal]->Set_BackColor(RGB(0, 250, 0));
+			}
 		}
 	}
 	return Valor;
@@ -137,10 +175,14 @@ int digitalRead(int pin) {
 int analogRead(int pin) {
 	int PinReal = ObtenerPin(pin);
 	int Valor = 0;
+	int ValColor;
 	// recorrer			Potes	
 	for (int i = 0; i < 3; i++) {
 		if (CPote[i].Pin == pin) {
 			Valor = CPote[i].Value;
+			ValColor = Funciones::Mapeo(Valor, 0, 1024, 0, 255);
+			Pin[PinReal]->Set_BackColor(RGB(0, ValColor, 0));
+			
 		}
 	}
 	return Valor;
@@ -162,6 +204,23 @@ unsigned long millis() {
 //***************************************
 int map(int Value, int fromLow, int fromHigh, int toLow, int toHigh){
 	return Funciones::Mapeo(Value, fromLow, fromHigh, toLow, toHigh);
+}
+
+//***************************************
+void Conexiones() {
+	// recorrer	Switches		
+	int pin;
+	int PinReal;
+	for (int i = 0; i < 3; i++) {
+		pin = CSwitch[i].Pin;
+		PinReal = ObtenerPin(pin);
+		Pin[PinReal]->Set_Color(RGB(0, 130, 0));
+		//Pote
+		pin = CPote[i].Pin;
+		PinReal = ObtenerPin(pin);
+		Pin[PinReal]->Set_Color(RGB(130, 130, 0));
+	}
+	
 }
 
 //***************************************

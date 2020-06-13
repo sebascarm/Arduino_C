@@ -55,6 +55,7 @@ HINSTANCE C_WinApi::Get_Instance(){
 }
 
 WNDPROC  OldButtonProc;
+WNDPROC  OldTextProc;
 
 //*********************************************
 //*** DIBUJADO DE LOS ELEMENTOS				***
@@ -74,11 +75,18 @@ void C_WinApi::Draw() {
 			// No dibujamos los objetos Shape			
 			if (CONTENEDOR[i].Tipo != TipoObjeto::T_SHAPE) {
 				CONTENEDOR[i].Draw();
-				// Agregamos procedimiento para botons	
 				if (CONTENEDOR[i].Tipo == TipoObjeto::T_BUTTON) {
+					// Agregamos procedimiento para botons
 					OldButtonProc = (WNDPROC)
 					SetWindowLongPtr(CONTENEDOR[i].Get_hWnd(), GWLP_WNDPROC, (LONG_PTR)&Boton_Proc);
 					//SetWindowLongPtr(*CONTENEDOR[i].pButton->Get_hWnd(), GWLP_WNDPROC, (LONG_PTR)&Boton_Proc);
+				} else if (CONTENEDOR[i].Tipo == TipoObjeto::T_TEXTBOX) {
+					// Agregamos procedimiento para TEXTOS
+					OldTextProc = (WNDPROC)
+					SetWindowLongPtr(CONTENEDOR[i].Get_hWnd(), GWLP_WNDPROC, (LONG_PTR)&Text_Proc);
+
+					//oldEditProc = (WNDPROC)
+					//SetWindowLongPtr(hInput, GWLP_WNDPROC, (LONG_PTR)subEditProc);
 				}
 			}
 		}
@@ -170,6 +178,7 @@ LRESULT CALLBACK C_WinApi::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 			if (CONTENEDOR[i].Tipo == TipoObjeto::T_TEXTBOX) {
 				int cont_ID = CONTENEDOR[i].Get_ID();
 				if (CONTENEDOR[i].Get_ID() == ID){
+					//Test(msg, ID, ID_Long, Notificacion, Elementos, TipoObjeto::T_TEXTBOX,true);
 					if (EN_CHANGE == Notificacion) {
 						CONTENEDOR[i].pTextBox->Event_Text_Change();
 					}
@@ -221,7 +230,7 @@ LRESULT CALLBACK C_WinApi::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 }
 
 //*********************************************
-//*** CALLBACK BOTON						***
+//*** CALLBACK ESPECIAL BOTON				***
 //*********************************************
 
 LRESULT CALLBACK C_WinApi::Boton_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
@@ -229,9 +238,7 @@ LRESULT CALLBACK C_WinApi::Boton_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 	int ID_Long		 = GetDlgCtrlID((HWND)lParam);  // Identificador en cambio de color	
 	int Notificacion = HIWORD(wParam);				// Codigo de notificacion recibida (ej: click, doble click)
 	int Elementos = (int)CONTENEDOR.size();
-
 	//Test(msg, ID, ID_Long, Notificacion, Elementos, TipoObjeto::T_BUTTON, false);
-
 	switch (msg) {
 	// PRECION DE BOTON										
 	case WM_LBUTTONDOWN: {
@@ -265,7 +272,41 @@ LRESULT CALLBACK C_WinApi::Boton_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 	}
 	return CallWindowProc(OldButtonProc, hWnd, msg, wParam, lParam);
 }
-
+//*********************************************
+//*** CALLBACK ESPECIAL TEXT BOX			***
+//*********************************************
+LRESULT CALLBACK C_WinApi::Text_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+	int ID = LOWORD(wParam);				// Identificador del control		
+	int ID_Long = GetDlgCtrlID((HWND)lParam);  // Identificador en cambio de color	
+	int Notificacion = HIWORD(wParam);				// Codigo de notificacion recibida (ej: click, doble click)
+	int Elementos = (int)CONTENEDOR.size();
+	//Test(msg, ID, ID_Long, Notificacion, Elementos, TipoObjeto::T_BUTTON, false);
+	switch (msg) {
+		// PRECION DE TECLA										
+		case WM_KEYDOWN: {
+			// Revisamos si la notificacion es (ENTER)
+			if (ID == VK_RETURN) {
+				for (int i = 0; i < Elementos; i++) {
+					// **** Envio de presion a botones				
+					if (CONTENEDOR[i].Tipo == TipoObjeto::T_TEXTBOX) {
+						// Buscamos el text que recibe el evento	
+						HWND Cont = CONTENEDOR[i].Get_hWnd();
+						if (Cont == hWnd) {
+							string tmp = CONTENEDOR[i].pTextBox->Get_Text() + "\n";
+							CONTENEDOR[i].pTextBox->Set_Text(tmp);
+							//CONTENEDOR[i].pTextBox->Event_Text_Change();
+							OutputDebugString("--press--\n");
+						}
+					}
+				}
+			} else {
+				return CallWindowProc(OldTextProc, hWnd, msg, wParam, lParam);
+			}
+		}
+		break;
+	}
+	return CallWindowProc(OldTextProc, hWnd, msg, wParam, lParam);
+}
 
 //*********************************************
 //*** LOOP									***

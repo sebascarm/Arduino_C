@@ -1,4 +1,8 @@
-## Arduino_C 0.7
+## Arduino_C 0.8
+
+### 13/06/2020
+    -Pote
+    -ShiftOut
 
 ### 31/05/2020
     - Cambio de color del Shap

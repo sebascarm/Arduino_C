@@ -8,6 +8,7 @@ void C_TextBox::Create(Win_Frame* pFrame, std::string Text, int x, int y, int an
 	// Valores propios
 	Tipo = "EDIT";
 	Estilo = WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_AUTOHSCROLL | WS_BORDER | BS_FLAT;
+
 }
 
 //*********************************************

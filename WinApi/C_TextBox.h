@@ -1,8 +1,10 @@
 //######################################################//
-// TextBox v2.0											//
+// TextBox v2.2											//
 //######################################################//
 // ULTIMA MODIFICACION DOCUMENTADA                      //
-// 10/06/2020                                           //
+// 12/06/2020                                           //
+// Cambiar el tamaño del texto							//
+// Configuracion para admitir enter						//
 // Evento Text Change									//
 //######################################################//
 
@@ -21,6 +23,7 @@ public:
 	int		Get_Pos_Y() { return C_Objeto::Get_Pos_Y(); }
 	// Metodos
 	void	Set_Text(string Text) { C_Objeto::Set_Text(Text); }
+	void    Set_Text_Size(int Text_Size) { C_Objeto::Set_Text_Size(Text_Size); };
 	void	Set_Pos(int x, int y, int ancho, int alto) { C_Objeto::Set_Pos(x, y, ancho, alto); }
 	void	Set_Enable() { C_Objeto::Set_Enable(); }
 	void	Set_Disable() { C_Objeto::Set_Disable(); }

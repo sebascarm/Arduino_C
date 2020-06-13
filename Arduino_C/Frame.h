@@ -3,13 +3,16 @@
 #include "WinApi.h"
 #include "c_switch.h"
 #include "C_Pote.h"
+#include "C_ShiftOut.h"
 
 //******************************************************************//
 //**** VARIABLES GLOBALES										****//
 //******************************************************************//
 
-int LOOPS = 100000;	// Cantidad de Loops	
-int DELAY = 10;		// Delay entre loops	
+int		LOOPS		= 100000;	// Cantidad de Loops			
+int		DELAY		= 10;		// Delay entre loops			
+string	BUFFERSERIE = "";		// BUFFER  Puerto serie entrada	
+bool	STOP		= false;
 
 //******************************************************************//
 //**** OBJETOS GLOBALES											****//
@@ -28,6 +31,7 @@ Win_TextBox*	Text_Loop		= New_TextBox();
 Win_Label*		Label_Delay		= New_Label();
 Win_TextBox*	Text_Delay		= New_TextBox();
 Win_MultiLine*	Text_SerieIN	= New_MultiLine();
+Win_TextBox*	Text_Serial		= New_TextBox();
 Win_MultiLine*	Text_SerieOUT	= New_MultiLine();
 Win_Shape*		Placa			= New_Shape();
 std::vector <Win_Shape*> Pin;
@@ -35,6 +39,7 @@ std::vector <Win_Label*> Label;
 // Objetos compuestos
 C_Switch CSwitch[3];
 C_Pote	 CPote[3];
+C_ShiftOut CShiftOut[1];
 
 //******************************************************************//
 //**** CREAR OBJETOS											****//
@@ -52,7 +57,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 	Label_Delay->Create(Frame1, "Delay", 260, 114);
 	Text_Delay->Create(Frame1, "10", 260, 130);
 
-	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 320);
+	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 298);
+	Text_Serial->Create(Frame1, "", 330, 330, 183, 20);
 	Text_SerieOUT->Create(Frame1, "", 540, 30, 200, 320);
 	//Compuestos
 	CSwitch[0].Create(Frame1, "Switch 1", 50, 380);
@@ -61,7 +67,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CPote[0].Create(Frame1, "Pote 1", 120, 380);
 	CPote[1].Create(Frame1, "Pote 2", 120, 420);
 	CPote[2].Create(Frame1, "Pote 3", 120, 460);
-
+	CShiftOut[0].Create(Frame1, "595 1", 300, 380);
 		
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
@@ -74,6 +80,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y+30)+(i*10) , 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		Label[j]->Create(Frame1,to_string(k), x+12, (y + 30) + (i * 10), 20, 10);
@@ -84,6 +92,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 30) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		Label[j]->Create(Frame1, "A" + to_string(l), x+168, (y + 30) + (i * 10), 20, 10,W_Align::A_DER);
@@ -97,6 +107,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y + 40) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		Label[j]->Create(Frame1, to_string(k), x + 12, (y + 40) + (i * 10), 20, 10);
@@ -107,6 +119,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 40) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		Label[j]->Create(Frame1, "A" + to_string(l), x + 168, (y + 40) + (i * 10), 20, 10, W_Align::A_DER);
@@ -119,6 +133,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y + 50) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		if (k < 14) {
@@ -137,6 +153,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 50) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		if (i == 16) Label[j]->Create(Frame1, "Vin", x + 148, (y + 50) + (i * 10), 40, 10, W_Align::A_DER);
@@ -158,6 +176,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x+10)+(i * 10), y, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
 		if (i == 0) Label[k]->Create(Frame1, "5V", (x+10)+(i*10) , y+20, 40, 10);
@@ -174,6 +194,8 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x + 10) + (i * 10), y+10, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
+		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Color(RGB(50, 50, 50));
 		j++;
 	}
 

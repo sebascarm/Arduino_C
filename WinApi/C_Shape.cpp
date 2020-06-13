@@ -24,6 +24,11 @@ void C_Shape::Set_BackColor(COLORREF Color){
     Redibujado();
 }
 
+void C_Shape::Set_Border_Size(int Size) {
+    this->Grosor = Size;
+    Redibujado();
+}
+
 // Funcion interna para llamar al redibujado
 void C_Shape::Redibujado(){
     if (this->Iniciado) {
@@ -51,7 +56,7 @@ void C_Shape::Set_FreePoints(int x1, int y1, int x2, int y2, int x3, int y3, int
 //*** No se activa solo						***
 //*********************************************
 void C_Shape::Draw_Shape(HDC hdc) {
-    HGDIOBJ hPen = CreatePen(PS_SOLID, 1, this->Color);
+    HGDIOBJ hPen = CreatePen(PS_SOLID, this->Grosor, this->Color);
     HGDIOBJ hBrush = CreateSolidBrush(this->BackColor);
    HGDIOBJ holdPen = SelectObject(hdc, hPen);
     HGDIOBJ holdBrush = SelectObject(hdc, hBrush);
