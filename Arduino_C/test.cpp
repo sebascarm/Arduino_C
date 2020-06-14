@@ -1,31 +1,46 @@
 #include "Arduino_PC.h"
-// la funcion void serialEvent() debe existir o omitir en Arduino.cpp
 
+//**************************************************************//
+//  Notes   : Code for using a 74HC595 Shift Register           //
+//  FEUDRINO : COM 4
+//****************************************************************
+int PINDataLED = 22;
+int PINLatchLED = 24;
+int PINClockLED = 26;
 
-const int analogInPin1 = A6;  // Analog input pin that the potentiometer is attached to
-const int analogInPin2 = A7;  // Analog input pin that the potentiometer is attached to
-
-int sensorValue1 = 0;        // value read from the pot
-int sensorValue2 = 0;        // value read from the pot
+int CHIP_LEDS1 = 0;
+int CHIP_LEDS2 = 0;
+int CHIP_LEDS3 = 0;
 
 void setup() {
-	// initialize serial communications at 9600 bps:
-	Serial.begin(9600);
+    //set pins to output so you can control the shift register
+    pinMode(PINDataLED, OUTPUT);
+    pinMode(PINLatchLED, OUTPUT);
+    pinMode(PINClockLED, OUTPUT);
+    Serial.begin(9600);
 }
 
 void loop() {
-	// read the analog in value:
-	sensorValue1 = analogRead(analogInPin1);
-	sensorValue2 = analogRead(analogInPin2);
-	// map it to the range of the analog out:
-
-	// print the results to the serial monitor:
-	Serial.print("sensor1 = ");
-	Serial.print(sensorValue1);
-	Serial.print(" sensor2 = ");
-	Serial.println(sensorValue2);
-
-	delay(100);
+    for (int i = 0; i < 8; i++) {
+        bitWrite(CHIP_LEDS1, i, 1);
+        bitWrite(CHIP_LEDS2, i, 1);
+        bitWrite(CHIP_LEDS3, i, 1);
+        EnviaraPlaca();
+        delay(1000);
+    }
+    for (int i = 0; i < 8; i++) {
+        bitWrite(CHIP_LEDS1, i, 0);
+        bitWrite(CHIP_LEDS2, i, 0);
+        bitWrite(CHIP_LEDS3, i, 0);
+        EnviaraPlaca();
+        delay(1000);
+    }
 }
 
-
+void EnviaraPlaca() {
+    digitalWrite(PINLatchLED, LOW);
+    shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS1);
+    shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS2);
+    //shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS3);
+    digitalWrite(PINLatchLED, HIGH);
+}

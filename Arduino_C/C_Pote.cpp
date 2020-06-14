@@ -49,7 +49,11 @@ void C_Pote::Event_Click_mas(int ID) {
 void C_Pote::Event_Text(int ID) {
 	pPote = Obtener_Pote(ID);
 	string text = pPote->Textbox->Get_Text();
-	pPote->Pin = Funciones::To_Integer(text);
+	if (text == "") {
+		pPote->Pin = -1;
+	} else {
+		pPote->Pin = Funciones::To_Integer(text);
+	}
 }
 
 void C_Pote::Redibujado(C_Pote* pPote) {

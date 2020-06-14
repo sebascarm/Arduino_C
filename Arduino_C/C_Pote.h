@@ -31,7 +31,7 @@ public:
 	int	BOT_ID_mas	 = 0;
 	int TEX_ID		 = 0;
 	void Create(Win_Frame* pFrame, string text, int x, int y);
-	int Pin = 0;
+	int Pin = -1;
 	int Value = 0; // 0 - 1024	
 };
 

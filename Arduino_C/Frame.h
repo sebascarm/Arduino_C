@@ -13,6 +13,7 @@ int		LOOPS		= 100000;	// Cantidad de Loops
 int		DELAY		= 10;		// Delay entre loops			
 string	BUFFERSERIE = "";		// BUFFER  Puerto serie entrada	
 bool	STOP		= false;
+bool	PAUSA		= false;
 
 //******************************************************************//
 //**** OBJETOS GLOBALES											****//
@@ -26,6 +27,9 @@ Win_MessageBox* Mensaje = New_MessageBox();
 // Objetos			
 Win_Button*		Boton_Iniciar	= New_Button();
 Win_Button*		Boton_Parar		= New_Button();
+Win_Button*		Boton_Pausa		= New_Button();
+Win_Button*		Boton_Conectar  = New_Button();
+Win_Button*		Boton_Guardar	= New_Button();
 Win_Label*		Label_Loop		= New_Label();
 Win_TextBox*	Text_Loop		= New_TextBox();
 Win_Label*		Label_Delay		= New_Label();
@@ -52,10 +56,13 @@ void CrearObjetos(HINSTANCE hInstance) {
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
 	Boton_Parar->Create(Frame1, "Detener", 260, 52);
-	Label_Loop->Create(Frame1, "Loops", 260, 74);
-	Text_Loop->Create(Frame1, "100000", 260, 90);
-	Label_Delay->Create(Frame1, "Delay", 260, 114);
-	Text_Delay->Create(Frame1, "10", 260, 130);
+	Boton_Pausa->Create(Frame1, "Pausa", 260, 74);
+	Label_Loop->Create(Frame1, "Loops", 260, 98);
+	Text_Loop->Create(Frame1, "100000", 260, 114);
+	Label_Delay->Create(Frame1, "Delay", 260, 138);
+	Text_Delay->Create(Frame1, "10", 260, 154);
+	Boton_Conectar->Create(Frame1, "Conectar", 260, 308);
+	Boton_Guardar->Create(Frame1, "Guardar", 260, 330);
 
 	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 298);
 	Text_Serial->Create(Frame1, "", 330, 330, 183, 20);

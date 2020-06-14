@@ -5,8 +5,9 @@
 #include "WinApi.h"
 #include "c_switch.h"
 #include "C_Pote.h"
+#include "C_ShiftOut.h"
 
-#include <map>
+//#include <map>
 
 
 extern std::vector <Win_Shape*> Pin;
@@ -14,6 +15,8 @@ extern Win_MultiLine* Text_SerieIN;
 extern Win_MultiLine* Text_SerieOUT;
 extern C_Switch CSwitch[3];
 extern C_Pote CPote[3];
+extern C_ShiftOut CShiftOut[1];
+
 //extern Win_TextBox* TextSerial;
 
 extern int		LOOPS;
@@ -26,11 +29,10 @@ clock_t reloj_ini;
 clock_t reloj_fin;
 clock_t reloj_dif;
 
-typedef void (*PF)();
-std::map<std::string, PF> defined_functions;
-
 
 void iniciar() {
+	bitest();
+	
 	Conexiones();
 
 	reloj_ini = clock();
@@ -47,8 +49,7 @@ void iniciar() {
 
 }
 
-
-
+//**************************************
 
 //***************************************
 void _Serial::begin(int x) {
@@ -207,18 +208,37 @@ int map(int Value, int fromLow, int fromHigh, int toLow, int toHigh){
 }
 
 //***************************************
+void bitWrite(int &Value, int Bit_Number, bool Bit_Value){
+	char mascara;
+	char Valor = Value;
+	// el original esta en 0
+	mascara = 1;
+	mascara << Bit_Number;
+	if ((Valor & 2 ^ Bit_Number) == 0) {
+		if (Bit_Value) 	Valor = Valor | mascara;
+	} 
+	// el original esta en 1
+	else if (!Bit_Value) Valor = Valor ^ mascara;
+		
+	Value = Valor;
+	
+}
+
+
+//***************************************
 void Conexiones() {
 	// recorrer	Switches		
 	int pin;
 	int PinReal;
+	// Primero tenemos q limpiar los pines
 	for (int i = 0; i < 3; i++) {
 		pin = CSwitch[i].Pin;
 		PinReal = ObtenerPin(pin);
-		Pin[PinReal]->Set_Color(RGB(0, 130, 0));
+		if (pin > -1) Pin[PinReal]->Set_Color(RGB(0, 130, 0));
 		//Pote
 		pin = CPote[i].Pin;
 		PinReal = ObtenerPin(pin);
-		Pin[PinReal]->Set_Color(RGB(130, 130, 0));
+		if (pin > -1) Pin[PinReal]->Set_Color(RGB(130, 130, 0));
 	}
 	
 }

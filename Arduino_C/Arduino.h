@@ -124,12 +124,13 @@ int	map(int Value, int fromLow, int fromHigh, int toLow, int toHigh);
 //Random Numbers				
 //	random()
 //	randomSeed()
-//	Bitsand Bytes
+
+//Bitsand Bytes
 //	bit()
 //	bitClear()
 //	bitRead()
 //	bitSet()
-//	bitWrite()
+void bitWrite(int &Value, int Bit_Number, bool Bit_Value);
 //	highByte()
 //	lowByte()
 

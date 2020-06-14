@@ -11,6 +11,14 @@ void Inicio() {
 void Stop() {
 	STOP = true;
 }
+void Pausar() {
+
+}
+
+void Coneccion() {
+	Conexiones();
+}
+
 void Loop(int ID) {
 	string Loops = Text_Loop->Get_Text();
 	LOOPS = Funciones::To_Integer(Loops);
@@ -33,6 +41,7 @@ void TextSerial(int ID) {
 	}
 }
 
+
 //******************************************************************//
 //**** ASIGNACION DE EVENTOS									****//
 //******************************************************************//
@@ -40,9 +49,12 @@ void TextSerial(int ID) {
 void  Eventos() {
 	Boton_Iniciar->Assign_Event_Click(Inicio);
 	Boton_Parar->Assign_Event_Click(Stop);
+	Boton_Pausa->Assign_Event_Click(Pausar);
+	Boton_Conectar->Assign_Event_Click(Coneccion);
 	Text_Loop->Assign_Event_Text_Change_ID(Loop);
 	Text_Delay->Assign_Event_Text_Change_ID(Delay);
 	Text_Serial->Assign_Event_Text_Change_ID(TextSerial);
+	
 }
 
 
