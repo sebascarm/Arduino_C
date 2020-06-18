@@ -1,6 +1,12 @@
 #include "C_ShiftOut.h"
 
+#include "Funciones.h"
 #include <bitset>
+
+std::vector <C_ShiftOut*> p_SHIFT;				// Puntero Matriz Pote	
+C_ShiftOut* Obtener_Shift(int ID_Elemento);		// Funcion Estatica		
+C_ShiftOut* pShift;								// Puntero Estatico		
+
 
 void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
 	int ancho = 30;
@@ -9,15 +15,12 @@ void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
 	for (int i = 0; i < 8; i++)	{
 		Linea[i] = New_Shape();
 		Linea[i]->Create(pFrame, S_Style::S_LINE, x + ancho, (y+5)+(i * 11), 10, 0);
-		
 		Label_Linea[i] = New_Label();
 		Label_Linea[i]->Create(pFrame, to_string(i+1), (x + ancho + 2), (y + 6) + (i * 11), 10, 10);
 		Label_Linea[i]->Set_Text_Size(11);
-
 		Circulo_Linea[i] = New_Shape();
 		Circulo_Linea[i]->Create(pFrame, S_Style::S_CIRCLE, (x + ancho + 10), (y+1 + (i * 11)), 10, 10);
 		Circulo_Linea[i]->Set_BackColor(RGB(50, 50, 50));
-		
 	}
 	Data->Create(pFrame, S_Style::S_LINE, x -25, (y + 5), 24, 0);
 	Data->Set_Color(RGB(0, 200, 0));
@@ -40,6 +43,16 @@ void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
 	Text_Latch->Set_Text_Size(9);
 	Text_Clock->Create(pFrame, "", (x - 48), y+45, 20, 14);
 	Text_Clock->Set_Text_Size(9);
+
+	TEX_ID_LATCH = Text_Latch->Get_ID();
+	TEX_ID_DATA = Text_Data->Get_ID();
+	TEX_ID_CLOCK = Text_Clock->Get_ID();
+
+	p_SHIFT.push_back(this);
+
+	Text_Latch->Assign_Event_Text_Change_ID(Event_Text);
+	Text_Data->Assign_Event_Text_Change_ID(Event_Text);
+	Text_Clock->Assign_Event_Text_Change_ID(Event_Text);
 }
 
 void C_ShiftOut::Input_Latch(bool Value){
@@ -51,6 +64,7 @@ void C_ShiftOut::Input_Latch(bool Value){
 		for (int i = 0; i < 8; i++) {
 			if ((Pin_Val & 2 ^ i) == 0) ApagarPin(i);
 			else PrenderPin(i);
+			Sleep(1);
 		}
 
 	}
@@ -95,5 +109,37 @@ void C_ShiftOut::Input_Data(bool Value) {
 
 		string tmp = std::bitset<8>(Pin_Buffer).to_string() + '\n';
 		OutputDebugString(tmp.c_str());
+	}
+}
+
+// Funciones estaticas				
+void C_ShiftOut::Event_Text(int ID) {
+	pShift = Obtener_Shift(ID);
+	string text;
+	if (pShift->TEX_ID_LATCH == ID) {
+		text = pShift->Text_Latch->Get_Text();
+		if (text == "")	pShift->PinLatch = -1;
+		else pShift->PinLatch = Funciones::To_Integer(text);
+	}
+	else if (pShift->TEX_ID_DATA == ID) {
+		text = pShift->Text_Data->Get_Text();
+		if (text == "")	pShift->PinData = -1;
+		else pShift->PinData = Funciones::To_Integer(text);
+	}
+	else if (pShift->TEX_ID_CLOCK == ID) {
+		text = pShift->Text_Clock->Get_Text();
+		if (text == "")	pShift->PinClock = -1;
+		else pShift->PinClock = Funciones::To_Integer(text);
+	}
+}
+
+C_ShiftOut* Obtener_Shift(int ID_Elemento) {
+	int cant = p_SHIFT.size();
+	for (int i = 0; i < cant; i++) {
+		if ((p_SHIFT[i]->TEX_ID_LATCH == ID_Elemento) ||
+			(p_SHIFT[i]->TEX_ID_DATA == ID_Elemento) ||
+			(p_SHIFT[i]->TEX_ID_CLOCK == ID_Elemento)) {
+			return p_SHIFT[i]; // Retorna el puntero al switch
+		}
 	}
 }

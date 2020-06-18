@@ -9,6 +9,8 @@
 #include <sstream>		//Para string to integer
 #include <iostream>		//Para COUT
 
+#include <bitset>
+
 #ifdef _DEBUG
 bool DEBUG = true;
 #else
@@ -251,7 +253,22 @@ namespace Funciones {
 		double Resul = ((Value - Min1) * (Max2 - Min2) / (Max1 - Min1)) + Min2;
 		return Resul;
 	}
+	//******************************************************
+	//**** BINARIOS										****
+	//******************************************************
+	void Add_Bit(char &Val_byte, bool Value) {
+		Val_byte = Val_byte << 1;
+		Val_byte = Val_byte | Value;
 
+		//string tmp = std::bitset<8>(Val_byte).to_string() + '\n';
+		//OutputDebugString(tmp.c_str());
+	}
+	bool Get_Bit(char Val_byte, int Position) {
+		if ((Val_byte & 2 ^ Position) == 0) return false;
+		else return true;
+	}
+
+	
 	//******************************************************
 	//**** FUNCION PARA DEBUG Y LOG						****
 	//******************************************************

@@ -71,6 +71,10 @@ namespace Funciones {
 	DLLIMPORT int Mapeo(int Value, int Min1, int Max1, int Min2, int Max2);
 	DLLIMPORT double Mapeo(double Value, int Min1, int Max1, int Min2, int Max2);
 	DLLIMPORT double Mapeo(double Value, double Min1, double Max1, int Min2, int Max2);
+	// Binarios
+	// Agrega un bit a izquiera desplazando los bits
+	DLLIMPORT void Add_Bit(char &Val_byte, bool Value);
+	DLLIMPORT bool Get_Bit(char Val_byte, int Position);
 	//Logs y debug	(usar templates con ...)	
 	DLLIMPORT void Log(std::string Datos, std::string Datos2 = "", std::string Datos3 = "", std::string Datos4 = "", std::string Datos5 = "");
 	DLLIMPORT void Logl(std::string Datos, std::string Datos2 = "", std::string Datos3 = "", std::string Datos4 = "", std::string Datos5 = "");

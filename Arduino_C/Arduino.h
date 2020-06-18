@@ -29,6 +29,9 @@ using namespace std;
 
 #define delay	Sleep
 
+#define MSBFIRST true
+#define LSBFIRST false
+
 void iniciar();
 
 void setup();
@@ -82,6 +85,7 @@ void analogWrite(int pin, int Value);
 //	pulseIn()		
 //	pulseInLong()	
 //	shiftIn()		
+void shiftOut(int dataPin, int clockPin, bool bitOrder,int value);
 //	shiftOut()		
 //	tone()			
 

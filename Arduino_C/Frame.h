@@ -43,7 +43,7 @@ std::vector <Win_Label*> Label;
 // Objetos compuestos
 C_Switch CSwitch[3];
 C_Pote	 CPote[3];
-C_ShiftOut CShiftOut[1];
+C_ShiftOut CShiftOut[3];
 
 //******************************************************************//
 //**** CREAR OBJETOS											****//
@@ -75,7 +75,9 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CPote[1].Create(Frame1, "Pote 2", 120, 420);
 	CPote[2].Create(Frame1, "Pote 3", 120, 460);
 	CShiftOut[0].Create(Frame1, "595 1", 300, 380);
-		
+	CShiftOut[1].Create(Frame1, "595 1", 420, 380);
+	CShiftOut[2].Create(Frame1, "595 1", 540, 380);
+
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
 	Placa->Set_BackColor(RGB(0, 100, 0));
