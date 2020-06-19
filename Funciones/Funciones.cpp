@@ -256,16 +256,47 @@ namespace Funciones {
 	//******************************************************
 	//**** BINARIOS										****
 	//******************************************************
-	void Add_Bit(char &Val_byte, bool Value) {
+	void Add_Bit(char& Val_byte, bool Value, bool debug) {
 		Val_byte = Val_byte << 1;
 		Val_byte = Val_byte | Value;
 
-		//string tmp = std::bitset<8>(Val_byte).to_string() + '\n';
-		//OutputDebugString(tmp.c_str());
+		if (debug) {
+			string tmp = "AAD_BIT: " + std::bitset<8>(Val_byte).to_string() + '\n';
+			OutputDebugString(tmp.c_str());
+		}
 	}
-	bool Get_Bit(char Val_byte, int Position) {
-		if ((Val_byte & 2 ^ Position) == 0) return false;
-		else return true;
+	void Funciones::Bit_Write(char& Val_byte, int Position, bool Bit_Value, bool debug){
+		char mascara = 1;
+		int Potencia = pow(2, Position);
+		mascara = mascara << Position;
+		if ((Val_byte & Potencia) == 0) {
+			if (Bit_Value) 	Val_byte = Val_byte | mascara;
+		}
+		// el original esta en 1
+		else if (!Bit_Value) Val_byte = Val_byte ^ mascara;
+		
+		if (debug) {
+			string tmp = "BIT WRITE: " + to_string(Val_byte) + '\n';
+			OutputDebugString(tmp.c_str());
+		}
+		
+	}
+	bool Get_Bit(char Val_byte, int Position, bool debug) {
+		int Potencia = pow(2, Position);
+		//if ((Val_byte & 2 ^ Position) == 0) {
+		if ((Val_byte & Potencia) == 0) {
+			if (debug) {
+				string tmp = "GET_BIT 0 POS " + to_string(Position) + '\n';
+				OutputDebugString(tmp.c_str());
+			}
+			return false;
+		} else {
+			if (debug) {
+				string tmp = "GET_BIT: 1 POS:" + to_string(Position) + '\n';
+				OutputDebugString(tmp.c_str());
+			}
+			return true;
+		}
 	}
 
 	

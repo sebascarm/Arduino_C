@@ -1,8 +1,10 @@
 //######################################################//
-// Shape v1.5											//
+// Shape v1.6											//
 //######################################################//
 // ULTIMA MODIFICACION DOCUMENTADA                      //
-// 13/06/2020                                           //
+// 19/06/2020                                           //
+// Ampliacion de region de dibujo						//
+// Manejo del reintento de redibujado con sleep			//
 // Cambiar el grosor del borde					 		//
 // Posiblidad de cambiar la posicion del grafico 		//
 // Correccion en el redibujado							//
@@ -28,7 +30,10 @@ protected:
 	POINT	 Poligono[5] = { 0,0,0,0,0,0,0,0,0,0 };	// Para poligonos
 	int		 Grosor = 1;
 	void	 Redibujado();
+	
 public:
+	static bool Dibujo_Pendiente;
+
 	void Create(Win_Frame* pFrame, S_Style Style, int x, int y, int ancho, int alto);
 	// Propiedades	
 	string	Get_Text() { return C_Objeto::Get_Text(); }

@@ -135,7 +135,7 @@ void pinMode(int pin, string Value) {
 		Pin[PinReal]->Set_BackColor(RGB(150, 100, 100));
 	}
 	// aveces no se dibuja todo
-	Sleep(1);
+	//Sleep(1);
 }
 //***************************************
 void digitalWrite(int pin, bool Value) {
@@ -197,26 +197,35 @@ void shiftOut(int dataPin, int clockPin, bool bitOrder, int value){
 	int PinRealClock = ObtenerPin(clockPin);
 	char Char_val = value;
 	bool Bit_val;
+	bool Clock = true;
 	// mostramos el pin
 	
 	// recorremos 
 	for (int i = 0; i < 3; i++) {
 		if ((CShiftOut[i].PinData == dataPin) &
 			(CShiftOut[i].PinClock == clockPin)) {
-			Pin[PinRealClock]->Set_BackColor(RGB(250, 0, 0));
-			Sleep(100);
+			
 			for (int j = 0; j < 8; j++) {
 				if (bitOrder) {
 					Bit_val = Funciones::Get_Bit(Char_val, j);
 					CShiftOut[i].Input_Data(Bit_val);
 					// mostrar el pin
+					//Sleep(1);
 					if (Bit_val) Pin[PinRealData]->Set_BackColor(RGB(250, 0, 0));
 					else Pin[PinRealData]->Set_BackColor(RGB(100, 100, 100));
-					Sleep(100);
+					//Sleep(1);
+					if (Clock) {
+						Pin[PinRealClock]->Set_BackColor(RGB(250, 0, 0));
+						Clock = false;
+					} else {
+						Pin[PinRealClock]->Set_BackColor(RGB(100, 100, 100));
+						Clock = true;
+					}
+
 				}
 			}
-			Pin[PinRealClock]->Set_BackColor(RGB(100, 100, 100));
-			Sleep(100);
+			//Sleep(1);
+			Pin[PinRealData]->Set_BackColor(RGB(100, 100, 100));
 		}
 	}
 
@@ -242,19 +251,9 @@ int map(int Value, int fromLow, int fromHigh, int toLow, int toHigh){
 
 //***************************************
 void bitWrite(int &Value, int Bit_Number, bool Bit_Value){
-	char mascara;
 	char Valor = Value;
-	// el original esta en 0
-	mascara = 1;
-	mascara << Bit_Number;
-	if ((Valor & 2 ^ Bit_Number) == 0) {
-		if (Bit_Value) 	Valor = Valor | mascara;
-	} 
-	// el original esta en 1
-	else if (!Bit_Value) Valor = Valor ^ mascara;
-		
+	Funciones::Bit_Write(Valor, Bit_Number, Bit_Value);
 	Value = Valor;
-	
 }
 
 

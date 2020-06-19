@@ -24,12 +24,12 @@ void loop() {
     for (int i = 0; i < 8; i++) {
         bitWrite(CHIP_LEDS1, i, 1);
         EnviaraPlaca();
-        delay(1000);
+        delay(100);
     }
     for (int i = 0; i < 8; i++) {
         bitWrite(CHIP_LEDS1, i, 0);
         EnviaraPlaca();
-        delay(1000);
+        delay(100);
     }
 }
 
