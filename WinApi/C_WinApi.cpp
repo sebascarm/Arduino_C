@@ -116,8 +116,7 @@ LRESULT CALLBACK C_WinApi::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lP
 		
 	HDC hdc = NULL;
 	PAINTSTRUCT PStruc;
-
-	//Test(ID, ID_Long, Elementos, TipoObjeto::T_BUTTON, false);
+	
 
 	switch (msg) {
 	//	Crear controles		//								
@@ -307,6 +306,23 @@ LRESULT CALLBACK C_WinApi::Text_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 	}
 	return CallWindowProc(OldTextProc, hWnd, msg, wParam, lParam);
 }
+//*********************************************
+//*** TAB									***
+//*********************************************
+void C_WinApi::TeclaTab(MSG msg){
+	HWND hwnd_rec = msg.hwnd;
+	int Elementos = (int)CONTENEDOR.size();
+	for (int i = 0; i < Elementos; i++) {
+		HWND hCont = CONTENEDOR[i].Get_hWnd();
+		if (hwnd_rec == hCont) {
+			OutputDebugString("IGUAL");
+			HWND hwnd_pas = CONTENEDOR[i + 1].Get_hWnd();
+			SetFocus(hwnd_pas);
+		}
+	}
+	
+	//SetFocus(hwnds);
+}
 
 //*********************************************
 //*** LOOP									***
@@ -315,8 +331,13 @@ int C_WinApi::Loop() {
 	MSG msg;
 	BOOL Result;
 	while ((Result = GetMessage(&msg, nullptr, 0, 0)) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (msg.message == WM_KEYDOWN && msg.wParam == VK_TAB) {
+			OutputDebugString("TAB");
+			TeclaTab(msg);
+		} else {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	};
 	if (Result == -1) {
 		return -1;
