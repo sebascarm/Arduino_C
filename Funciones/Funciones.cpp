@@ -283,7 +283,6 @@ namespace Funciones {
 	}
 	bool Get_Bit(char Val_byte, int Position, bool debug) {
 		int Potencia = pow(2, Position);
-		//if ((Val_byte & 2 ^ Position) == 0) {
 		if ((Val_byte & Potencia) == 0) {
 			if (debug) {
 				string tmp = "GET_BIT 0 POS " + to_string(Position) + '\n';

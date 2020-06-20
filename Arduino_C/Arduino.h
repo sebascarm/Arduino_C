@@ -32,6 +32,8 @@ using namespace std;
 #define MSBFIRST true
 #define LSBFIRST false
 
+#define byte char
+
 void iniciar();
 
 void setup();
@@ -132,7 +134,7 @@ int	map(int Value, int fromLow, int fromHigh, int toLow, int toHigh);
 //Bitsand Bytes
 //	bit()
 //	bitClear()
-//	bitRead()
+bool bitRead(char Value, int Position);
 //	bitSet()
 void bitWrite(int &Value, int Bit_Number, bool Bit_Value);
 //	highByte()

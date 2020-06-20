@@ -7,11 +7,23 @@ std::vector <C_ShiftOut*> p_SHIFT;				// Puntero Matriz Pote
 C_ShiftOut* Obtener_Shift(int ID_Elemento);		// Funcion Estatica		
 C_ShiftOut* pShift;								// Puntero Estatico		
 
+int C_ShiftOut::sID		= 0;
+int C_ShiftOut::sPinOut = 200;
 
 void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
+	ID = sID;
+	PinDataOut = sPinOut + 9;
+	++sID;
+	sPinOut = sPinOut + 10;
+
 	int ancho = 30;
 	Cuadro->Create(pFrame, S_Style::S_RECTANGLE, x, y, ancho, 90);
 	Cuadro->Set_BackColor(RGB(100, 100, 100));
+	Label->Create(pFrame, "595", x, y + 30, ancho, 20, W_Align::A_CENT);
+	Label->Set_BackColor(RGB(100, 100, 100));
+	Titulo->Create(pFrame, text, x+1, y + 42, ancho-2, 20, W_Align::A_CENT);
+	Titulo->Set_BackColor(RGB(100, 100, 100));
+
 	for (int i = 0; i < 8; i++)	{
 		Linea[i] = New_Shape();
 		Linea[i]->Create(pFrame, S_Style::S_LINE, x + ancho, (y+5)+(i * 11), 10, 0);
@@ -48,60 +60,43 @@ void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
 	TEX_ID_DATA = Text_Data->Get_ID();
 	TEX_ID_CLOCK = Text_Clock->Get_ID();
 
+	DataOut->Create(pFrame, S_Style::S_LINE, x-13, (y+5)+78, 13, 0);
+	Circulo_PinOut->Create(pFrame, S_Style::S_CIRCLE, x-23, (y+5) + 73, 10, 10);
+	Circulo_PinOut->Set_BackColor(RGB(50, 50, 50));
+	Label_PinOut->Create(pFrame, to_string(PinDataOut), x-14, (y + 6)+78, 20, 10);
+	Label_PinOut->Set_Text_Size(11);
+	//Label_PinOut_Detalle->Create(pFrame, "D. Out", (x-26), (y+5)+73, 24, 9, W_Align::A_DER);
+	Label_PinOut_Detalle->Create(pFrame, "OUT", (x - 45), (y + 5) + 72, 20, 9);
+	Label_PinOut_Detalle->Set_Text_Size(12);
+
 	p_SHIFT.push_back(this);
 
 	Text_Latch->Assign_Event_Text_Change_ID(Event_Text);
 	Text_Data->Assign_Event_Text_Change_ID(Event_Text);
 	Text_Clock->Assign_Event_Text_Change_ID(Event_Text);
+
+	
 }
 
 void C_ShiftOut::Input_Latch(bool Value){
 	Latch_Val = Value;
-	
 	if (Latch_Val) {
 		Pin_Val = Pin_Buffer;
 		Pin_Buffer = 0;
-		//string tmp = "PIN VAL: " + std::bitset<8>(Pin_Val).to_string() + '\n';
-		//OutputDebugString(tmp.c_str());
+		
+		string tmp = "PIN VAL: " + std::bitset<8>(Pin_Val).to_string() + '\n';
+		OutputDebugString(tmp.c_str());
+		
 		for (int i = 0; i < 8; i++) {
 			bool Valor_bit;
 			Valor_bit = Funciones::Get_Bit(Pin_Val, i);
-			//Sleep(1);
 			if (Valor_bit) {
-				//OutputDebugString("ON ");
 				PrenderPin(i);
 			} else {
-				//OutputDebugString("FF "); 
 				ApagarPin(i);
 			}
 		}
-		//OutputDebugString("\n");
-		//Sleep(1);
-
 	}
-	// Imprimir
-	/*
-	if (Latch_Val) {
-		Pin_Val = Pin_Buffer;
-		Pin_Buffer = 0;
-		if ((Pin_Val & 0x1) == 0) ApagarPin(0);
-		else PrenderPin(0);
-		if ((Pin_Val & 0x2) == 0) ApagarPin(1);
-		else PrenderPin(1);
-		if ((Pin_Val & 0x4) == 0) ApagarPin(2);
-		else PrenderPin(2);
-		if ((Pin_Val & 0x8) == 0) ApagarPin(3);
-		else PrenderPin(3);
-		if ((Pin_Val & 0x16) == 0) ApagarPin(4);
-		else PrenderPin(4);
-		if ((Pin_Val & 0x32) == 0) ApagarPin(5);
-		else PrenderPin(5);
-		if ((Pin_Val & 0x64) == 0) ApagarPin(6);
-		else PrenderPin(6);
-		if ((Pin_Val & 0x128) == 0) ApagarPin(7);
-		else PrenderPin(7);
-	}
-	*/
 }
 
 void C_ShiftOut::PrenderPin(int pin) {
@@ -110,18 +105,32 @@ void C_ShiftOut::PrenderPin(int pin) {
 void C_ShiftOut::ApagarPin(int pin) {
 	Circulo_Linea[pin]->Set_BackColor(RGB(50, 50, 50));
 }
+void C_ShiftOut::PrenderOut() {
+	Circulo_PinOut->Set_BackColor(RGB(250, 0, 0));
+}
+void C_ShiftOut::ApagarOut() {
+	Circulo_PinOut->Set_BackColor(RGB(50, 50, 50));
+}
 
 void C_ShiftOut::Input_Data(bool Value) {
+	// Pasar al Data Out
+	Data_Out = Funciones::Get_Bit(Pin_Buffer, 7);
+	// Asignamos (desplazo)
 	Funciones::Add_Bit(Pin_Buffer, Value);
-	//string tmp = std::bitset<8>(Pin_Buffer).to_string() + '\n';
-	//OutputDebugString(tmp.c_str());
-	//if (!Latch_Val){
-	//	Pin_Buffer = Pin_Buffer << 1;
-	//	Pin_Buffer = Pin_Buffer | Value;
-
-	//	string tmp = std::bitset<8>(Pin_Buffer).to_string() + '\n';
-	//	OutputDebugString(tmp.c_str());
-	//}
+	// Prender o apagar los outs
+	if (Data_Out) PrenderOut();
+	else ApagarOut();
+	// Recorrer los demas shift out para pasar el Data Out
+	int Cant_Shift = p_SHIFT.size();
+	for (int i = 0; i < Cant_Shift; i++) {		
+		if (ID != p_SHIFT[i]->ID) {						// Revisamos que no sea si mismo
+			if (p_SHIFT[i]->PinData == PinDataOut) {	// Revisamos que la entrada de otro sea igual a la salida
+				if (p_SHIFT[i]->PinClock == PinClock){	// Revisamos que el clock sea el mismo
+					p_SHIFT[i]->Input_Data(Data_Out);	// Auto llamamos al imput data recursivamente
+				}
+			}
+		}
+	}
 }
 
 // Funciones estaticas				

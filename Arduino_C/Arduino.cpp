@@ -145,7 +145,7 @@ void digitalWrite(int pin, bool Value) {
 	// revisamos los shiftout
 	for (int i = 0; i < 3; i++) {
 		if (CShiftOut[i].PinLatch == pin) {
-			CShiftOut->Input_Latch(Value);
+			CShiftOut[i].Input_Latch(Value);
 		}
 	}
 }
@@ -193,44 +193,37 @@ int analogRead(int pin) {
 
 //***************************************
 void shiftOut(int dataPin, int clockPin, bool bitOrder, int value){
-	int PinRealData = ObtenerPin(dataPin);
+	int PinRealData  = ObtenerPin(dataPin);
 	int PinRealClock = ObtenerPin(clockPin);
-	char Char_val = value;
-	bool Bit_val;
-	bool Clock = true;
+	char Char_val	 = value;
+	bool Bit_val	 = false;
+	bool Clock		 = true;
 	// mostramos el pin
-	
 	// recorremos 
 	for (int i = 0; i < 3; i++) {
 		if ((CShiftOut[i].PinData == dataPin) &
 			(CShiftOut[i].PinClock == clockPin)) {
-			
 			for (int j = 0; j < 8; j++) {
 				if (bitOrder) {
-					Bit_val = Funciones::Get_Bit(Char_val, j);
-					CShiftOut[i].Input_Data(Bit_val);
-					// mostrar el pin
-					//Sleep(1);
+					// mostrar el pin de arduino
 					if (Bit_val) Pin[PinRealData]->Set_BackColor(RGB(250, 0, 0));
 					else Pin[PinRealData]->Set_BackColor(RGB(100, 100, 100));
-					//Sleep(1);
+					// mostrar clock
 					if (Clock) {
-						Pin[PinRealClock]->Set_BackColor(RGB(250, 0, 0));
-						Clock = false;
-					} else {
-						Pin[PinRealClock]->Set_BackColor(RGB(100, 100, 100));
-						Clock = true;
+						Pin[PinRealClock]->Set_BackColor(RGB(250, 0, 0)); Clock = false;
+					} else { 
+						Pin[PinRealClock]->Set_BackColor(RGB(100, 100, 100)); Clock = true;
 					}
-
+					// Asignar valor en 595
+					Bit_val = Funciones::Get_Bit(Char_val, j);
+					CShiftOut[i].Input_Data(Bit_val);
 				}
 			}
-			//Sleep(1);
 			Pin[PinRealData]->Set_BackColor(RGB(100, 100, 100));
 		}
 	}
-
-	
 }
+
 
 //***************************************
 void delayMicroseconds(int Value){
@@ -255,7 +248,10 @@ void bitWrite(int &Value, int Bit_Number, bool Bit_Value){
 	Funciones::Bit_Write(Valor, Bit_Number, Bit_Value);
 	Value = Valor;
 }
-
+//***************************************
+bool bitRead(char Value, int Position) {
+	return Funciones::Get_Bit(Value, Position);
+}
 
 //***************************************
 void Conexiones() {

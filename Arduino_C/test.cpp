@@ -9,6 +9,8 @@ int PINLatchLED = 24;
 int PINClockLED = 26;
 
 int CHIP_LEDS1 = 0;
+int CHIP_LEDS2 = 0;
+int CHIP_LEDS3 = 0;
 
 void EnviaraPlaca();
 
@@ -23,20 +25,24 @@ void setup() {
 void loop() {
     for (int i = 0; i < 8; i++) {
         bitWrite(CHIP_LEDS1, i, 1);
+        bitWrite(CHIP_LEDS2, i, 0);
+        bitWrite(CHIP_LEDS3, i, 1);
         EnviaraPlaca();
-        delay(100);
+        delay(10);
     }
     for (int i = 0; i < 8; i++) {
         bitWrite(CHIP_LEDS1, i, 0);
+        bitWrite(CHIP_LEDS2, i, 1);
+        bitWrite(CHIP_LEDS3, i, 0);
         EnviaraPlaca();
-        delay(100);
+        delay(10);
     }
 }
 
 void EnviaraPlaca() {
     digitalWrite(PINLatchLED, LOW);
     shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS1);
-    //shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS2);
-    //shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS3);
+    shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS2);
+    shiftOut(PINDataLED, PINClockLED, MSBFIRST, CHIP_LEDS3);
     digitalWrite(PINLatchLED, HIGH);
 }

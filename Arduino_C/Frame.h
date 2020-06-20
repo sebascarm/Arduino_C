@@ -74,9 +74,9 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CPote[0].Create(Frame1, "Pote 1", 120, 380);
 	CPote[1].Create(Frame1, "Pote 2", 120, 420);
 	CPote[2].Create(Frame1, "Pote 3", 120, 460);
-	CShiftOut[0].Create(Frame1, "595 1", 300, 380);
-	CShiftOut[1].Create(Frame1, "595 1", 420, 380);
-	CShiftOut[2].Create(Frame1, "595 1", 540, 380);
+	CShiftOut[0].Create(Frame1, "SH-1", 300, 380);
+	CShiftOut[1].Create(Frame1, "SH-2", 420, 380);
+	CShiftOut[2].Create(Frame1, "SH-3", 540, 380);
 
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
