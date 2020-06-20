@@ -30,6 +30,9 @@
     <ClCompile Include="C_ShiftOut.cpp">
       <Filter>Main\compuesto</Filter>
     </ClCompile>
+    <ClCompile Include="C_ShiftIn.cpp">
+      <Filter>Main\compuesto</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Frame.h">
@@ -51,6 +54,9 @@
       <Filter>Main\compuesto</Filter>
     </ClInclude>
     <ClInclude Include="C_ShiftOut.h">
+      <Filter>Main\compuesto</Filter>
+    </ClInclude>
+    <ClInclude Include="C_ShiftIn.h">
       <Filter>Main\compuesto</Filter>
     </ClInclude>
   </ItemGroup>

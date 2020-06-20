@@ -83,10 +83,8 @@ void C_ShiftOut::Input_Latch(bool Value){
 	if (Latch_Val) {
 		Pin_Val = Pin_Buffer;
 		Pin_Buffer = 0;
-		
-		string tmp = "PIN VAL: " + std::bitset<8>(Pin_Val).to_string() + '\n';
-		OutputDebugString(tmp.c_str());
-		
+		//string tmp = "PIN VAL: " + std::bitset<8>(Pin_Val).to_string() + '\n';
+		//OutputDebugString(tmp.c_str());
 		for (int i = 0; i < 8; i++) {
 			bool Valor_bit;
 			Valor_bit = Funciones::Get_Bit(Pin_Val, i);

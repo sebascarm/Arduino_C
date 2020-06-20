@@ -4,6 +4,7 @@
 #include "c_switch.h"
 #include "C_Pote.h"
 #include "C_ShiftOut.h"
+#include "C_ShiftIn.h"
 
 //******************************************************************//
 //**** VARIABLES GLOBALES										****//
@@ -44,6 +45,7 @@ std::vector <Win_Label*> Label;
 C_Switch CSwitch[3];
 C_Pote	 CPote[3];
 C_ShiftOut CShiftOut[3];
+C_ShiftIn  CShiftIn[3];
 
 //******************************************************************//
 //**** CREAR OBJETOS											****//
@@ -51,7 +53,7 @@ C_ShiftOut CShiftOut[3];
 void CrearObjetos(HINSTANCE hInstance) {
 	//Principal
 	WinApi->Create(hInstance);
-	Frame1->Create(WinApi, "Titulo", 50, 50, 800, 540, true);
+	Frame1->Create(WinApi, "Titulo", 50, 50, 1100, 540, true);
 	Menu1->Create(Frame1, "Menú", { "Menu 1", "-", "Salir" });
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
@@ -66,7 +68,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 
 	Text_SerieIN->Create(Frame1, "", 330, 30, 200, 298);
 	Text_Serial->Create(Frame1, "", 330, 330, 183, 20);
-	Text_SerieOUT->Create(Frame1, "", 540, 30, 200, 320);
+	Text_SerieOUT->Create(Frame1, "", 540, 30, 500, 320);
 	//Compuestos
 	CSwitch[0].Create(Frame1, "Switch 1", 50, 380);
 	CSwitch[1].Create(Frame1, "Switch 2", 50, 420);
@@ -77,6 +79,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CShiftOut[0].Create(Frame1, "SH-1", 300, 380);
 	CShiftOut[1].Create(Frame1, "SH-2", 420, 380);
 	CShiftOut[2].Create(Frame1, "SH-3", 540, 380);
+	CShiftIn[0].Create(Frame1, "IN-1", 660, 380);
 
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);
@@ -89,7 +92,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y+30)+(i*10) , 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -101,7 +104,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 30) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -116,7 +119,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y + 40) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -128,7 +131,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 40) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -142,7 +145,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x, (y + 50) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -162,7 +165,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, x+190, (y + 50) + (i * 10), 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -185,7 +188,7 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x+10)+(i * 10), y, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		// Etiquetas
 		Label.push_back(New_Label());
@@ -203,16 +206,11 @@ void CrearObjetos(HINSTANCE hInstance) {
 		Pin.push_back(New_Shape());
 		Pin[j]->Create(Frame1, S_Style::S_RECTANGLE, (x + 10) + (i * 10), y+10, 10, 10);
 		Pin[j]->Set_BackColor(RGB(100, 100, 100));
-		Pin[j]->Set_Border_Size(3);
+		Pin[j]->Set_Border_Size(2);
 		Pin[j]->Set_Color(RGB(50, 50, 50));
 		j++;
 	}
 
 
-	//Shape1->Create(Frame1, S_Style::S_CIRCLE, 50, 50, 50, 50);
-	//Shape2->Create(Frame1, S_Style::S_RECTANGLE, 250, 250, 100, 100);
-	//Shape1->Create(Frame1, S_Style::S_CIRCLE, 50, 50, 70, 70);
-	//Shape1->Create(Frame1, S_Style::S_LINE, 50, 50, 70, 70);
-	//Shape1->Set_FreePoints(0, 0, 10, 10, 10, 60, 0, 70, 0,0);
 }
 

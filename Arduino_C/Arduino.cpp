@@ -6,6 +6,7 @@
 #include "c_switch.h"
 #include "C_Pote.h"
 #include "C_ShiftOut.h"
+#include "C_ShiftIn.h"
 
 //#include <map>
 
@@ -16,6 +17,7 @@ extern Win_MultiLine* Text_SerieOUT;
 extern C_Switch CSwitch[3];
 extern C_Pote CPote[3];
 extern C_ShiftOut CShiftOut[3];
+extern C_ShiftIn CShiftIn[3];
 
 //extern Win_TextBox* TextSerial;
 
@@ -142,11 +144,11 @@ void digitalWrite(int pin, bool Value) {
 	int PinReal = ObtenerPin(pin);
 	if (Value) Pin[PinReal]->Set_BackColor(RGB(250, 0, 0));
 	else Pin[PinReal]->Set_BackColor(RGB(100, 100, 100));
-	// revisamos los shiftout
+	// revisamos los shiftout y shiftin
 	for (int i = 0; i < 3; i++) {
-		if (CShiftOut[i].PinLatch == pin) {
-			CShiftOut[i].Input_Latch(Value);
-		}
+		if (CShiftOut[i].PinLatch == pin) CShiftOut[i].Input_Latch(Value);
+		if (CShiftIn[i].PinLatch == pin) CShiftIn[i].Input_Latch(Value);
+		if (CShiftIn[i].PinClock == pin) CShiftIn[i].Input_Clock(Value);
 	}
 }
 //***************************************
@@ -162,16 +164,14 @@ void analogWrite(int pin, int Value) {
 int digitalRead(int pin) {
 	int PinReal = ObtenerPin(pin);
 	int Valor = 0;
-	// recorrer			Switches
+	// recorrer Switches y shift in
 	for (int i = 0; i < 3; i++) {
-		if (CSwitch[i].Pin == pin) {
-			Valor = CSwitch[i].State;
-			// pintar el pin de entrada
-			if (Valor) {
-				Pin[PinReal]->Set_BackColor(RGB(0, 250, 0));
-			}
-		}
+		if (CSwitch[i].Pin == pin) Valor = CSwitch[i].State;
+		if (CShiftIn[i].PinData == pin) Valor = CShiftIn[i].Get_Data();
 	}
+	// pintar el pin de entrada
+	if (Valor) Pin[PinReal]->Set_BackColor(RGB(0, 250, 0));
+	else Pin[PinReal]->Set_BackColor(RGB(100, 100, 100));
 	return Valor;
 }
 //***************************************
@@ -267,17 +267,20 @@ void Conexiones() {
 		pin = CPote[i].Pin;
 		PinReal = ObtenerPin(pin);
 		if (pin > -1) Pin[PinReal]->Set_Color(RGB(130, 130, 0));
-		// shift
-		pin = CShiftOut[i].PinData;
-		PinReal = ObtenerPin(pin);
+		// shift out
+		pin = CShiftOut[i].PinData;	PinReal = ObtenerPin(pin);
 		if (pin > -1) Pin[PinReal]->Set_Color(RGB(0, 250, 0));
-		pin = CShiftOut[i].PinLatch;
-		PinReal = ObtenerPin(pin);
+		pin = CShiftOut[i].PinLatch; PinReal = ObtenerPin(pin);
 		if (pin > -1) Pin[PinReal]->Set_Color(RGB(250, 150, 0));
-		pin = CShiftOut[i].PinClock;
-		PinReal = ObtenerPin(pin);
+		pin = CShiftOut[i].PinClock; PinReal = ObtenerPin(pin);
 		if (pin > -1) Pin[PinReal]->Set_Color(RGB(250, 250, 0));
-		
+		// Shift in
+		pin = CShiftIn[i].PinData;	PinReal = ObtenerPin(pin);
+		if (pin > -1) Pin[PinReal]->Set_Color(RGB(20, 20, 250));
+		pin = CShiftIn[i].PinLatch; PinReal = ObtenerPin(pin);
+		if (pin > -1) Pin[PinReal]->Set_Color(RGB(250, 150, 0));
+		pin = CShiftIn[i].PinClock; PinReal = ObtenerPin(pin);
+		if (pin > -1) Pin[PinReal]->Set_Color(RGB(250, 250, 0));
 	}
 	
 }
