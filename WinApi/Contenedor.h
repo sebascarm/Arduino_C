@@ -37,7 +37,6 @@ public:
 	void	Show();		// Show (para frame)									
 	HWND	Get_hWnd(); //Get hWnd (para todos)									
 	int		Get_ID();	// Get ID de los elementos (todos menos frame)			
-
 	
 	HBRUSH ColorEdit(WPARAM wParam);	//Edicion de color (para label transparente) - devuelve el pincel modificado
 	

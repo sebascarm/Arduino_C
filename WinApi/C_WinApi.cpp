@@ -312,17 +312,32 @@ LRESULT CALLBACK C_WinApi::Text_Proc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM 
 void C_WinApi::TeclaTab(MSG msg){
 	HWND hwnd_rec = msg.hwnd;
 	int Elementos = (int)CONTENEDOR.size();
+	int Elemento;
 	for (int i = 0; i < Elementos; i++) {
 		HWND hCont = CONTENEDOR[i].Get_hWnd();
 		if (hwnd_rec == hCont) {
-			OutputDebugString("IGUAL");
-			HWND hwnd_pas = CONTENEDOR[i + 1].Get_hWnd();
+			Elemento = NextContenedor(i);
+			HWND hwnd_pas = CONTENEDOR[Elemento].Get_hWnd();
 			SetFocus(hwnd_pas);
 		}
 	}
-	
-	//SetFocus(hwnds);
 }
+
+int C_WinApi::NextContenedor(int ID_Actual) {
+	int ID_Next = ID_Actual + 1;
+	if (ID_Next == CONTENEDOR.size()) {
+		ID_Next = 0;
+	};
+	if ((CONTENEDOR[ID_Next].Tipo == TipoObjeto::T_FRAME) |
+		(CONTENEDOR[ID_Next].Tipo == TipoObjeto::T_MENU) |
+		(CONTENEDOR[ID_Next].Tipo == TipoObjeto::T_GROUPBOX) |
+		(CONTENEDOR[ID_Next].Tipo == TipoObjeto::T_LABEL) |
+		(CONTENEDOR[ID_Next].Tipo == TipoObjeto::T_SHAPE)) {
+		ID_Next = NextContenedor(ID_Next);
+	}
+	return ID_Next;
+}
+
 
 //*********************************************
 //*** LOOP									***
@@ -332,7 +347,7 @@ int C_WinApi::Loop() {
 	BOOL Result;
 	while ((Result = GetMessage(&msg, nullptr, 0, 0)) > 0) {
 		if (msg.message == WM_KEYDOWN && msg.wParam == VK_TAB) {
-			OutputDebugString("TAB");
+			//OutputDebugString("TAB");
 			TeclaTab(msg);
 		} else {
 			TranslateMessage(&msg);

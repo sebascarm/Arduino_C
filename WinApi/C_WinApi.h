@@ -16,6 +16,8 @@ protected:
 	static void Test(UINT msg, int ID, int ID_Long, int Notificacion, int Elementos, TipoObjeto Tipo, bool Test1 = false);
 	
 	void TeclaTab(MSG msg);
+	int NextContenedor(int ID_Actual);
+	
 	// friends
 	//friend C_Frame;
 
