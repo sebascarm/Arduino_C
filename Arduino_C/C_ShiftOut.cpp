@@ -77,6 +77,21 @@ void C_ShiftOut::Create(Win_Frame* pFrame, string text, int x, int y){
 
 	
 }
+void C_ShiftOut::Set_Pin_Data(string Pin){
+	Text_Data->Set_Text(Pin);
+	if (Pin == "") PinData = -1;
+	else PinData = Funciones::To_Integer(Pin);
+}
+void C_ShiftOut::Set_Pin_Latch(string Pin) {
+	Text_Latch->Set_Text(Pin);
+	if (Pin == "") PinLatch = -1;
+	else PinLatch = Funciones::To_Integer(Pin);
+}
+void C_ShiftOut::Set_Pin_Clock(string Pin) {
+	Text_Clock->Set_Text(Pin);
+	if (Pin == "") PinClock = -1;
+	else PinClock = Funciones::To_Integer(Pin);
+}
 
 void C_ShiftOut::Input_Latch(bool Value){
 	Latch_Val = Value;

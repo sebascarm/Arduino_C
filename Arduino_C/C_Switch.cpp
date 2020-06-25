@@ -11,7 +11,7 @@ void C_Switch::Create(Win_Frame* pFrame, string text, int x, int y){
 	Etiqueta->Create(pFrame, text, x, y + 20, 60, 20);
 	Boton->Create(pFrame, "X", x + 22, y, 20);
 	Textbox->Create(pFrame, "", x + 44, y , 20, 20);
-
+	Textbox->Set_Text_Size(11);
 	
 	Recuadro->Set_BackColor(RGB(120, 120, 120));
 	Circulo->Set_BackColor(RGB(60, 60, 60));
@@ -24,6 +24,12 @@ void C_Switch::Create(Win_Frame* pFrame, string text, int x, int y){
 	Boton->Assign_Event_Click_ID(Event_Click);
 	Textbox->Assign_Event_Text_Change_ID(Event_Text);
 
+}
+
+void C_Switch::Set_Pin(string Pin) {
+	Textbox->Set_Text(Pin);
+	if (Pin == "") this->Pin = -1;
+	else this->Pin = Funciones::To_Integer(Pin);
 }
 
 // Funciones estaticas				

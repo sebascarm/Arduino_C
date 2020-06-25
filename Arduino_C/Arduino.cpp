@@ -44,30 +44,38 @@ void iniciar() {
 	for (int i = 0; i < LOOPS; i++) {
 		if (STOP) break;
 		loop();
-		//serialEvent();	// omitir si no esta
+		serialEvent();	// omitir si no esta
 		Sleep(DELAY);
 	}
 	Text_SerieOUT->Add_Line("END()");
 
 }
 
-//**************************************
-
-//***************************************
+//*************************************
+//*** CLASE SERIAL					***
+//*************************************
 void _Serial::begin(int x) {
 	Text_SerieOUT->Add_Line("BEGIN (" + to_string(x) + ")");
 }
 //***************************************
-void _Serial::print(string x) {
+void _Serial::print(const char* x) {
 	Text_SerieOUT->Add_Text(x);
+}
+//***************************************
+void _Serial::print(String Text){
+	Text_SerieOUT->Add_Text(Text.Text);
 }
 //***************************************
 void _Serial::print(int x){
 	Text_SerieOUT->Add_Text(to_string(x));
 }
 //***************************************
-void _Serial::println(string x){
+void _Serial::println(const char* x){
 	Text_SerieOUT->Add_Line(x);
+}
+//***************************************
+void _Serial::println(String Text){
+	Text_SerieOUT->Add_Line(Text.Text);
 }
 //***************************************
 void _Serial::println(int x){
@@ -90,37 +98,74 @@ int _Serial::read() {
 		return -1;
 	}
 }
-//***************************************
-/*char _Serial::read(){
-	int longitud = BUFFERSERIE.length();
-	if (longitud) {
-		char tmp;
-		tmp = BUFFERSERIE.back();
-		BUFFERSERIE.resize(BUFFERSERIE.length() - 1);
-		return tmp;
-}*/
-//***************************************
+
 String::String(){
 	this->Text = "";
-}
-String::String(string Text){
-	this->Text = Text;
 }
 String::String(const char* Text) {
 	this->Text = Text;
 }
-String& String::operator=(const char* Text) {
-	return *this;
+String::String(int Text) {
+	this->Text = to_string(Text);
+}
+String::String(const String& Text){
+	this->Text = Text.Text;
 }
 
-void String::toCharArray(const char* Buffer, int Leng) {
-	//falta truncar
-	Buffer = Text.c_str();
+// SOBRECARGA DE OPERADORES
+String String::operator=(const String& Text){
+	this->Text = Text.Text;
+	return *this;
+}
+String String::operator+(const String& Text){
+	String tmp;
+	tmp.Text = this->Text + Text.Text;
+	return tmp;
 }
 String& String::operator+=(char Char){
 	string tmp = this->Text + Char;
 	this->Text = tmp;
 	return *this;
+}
+bool String::operator==(const String& Text){
+	if (this->Text == Text.Text) return true;
+	else return false;
+}
+
+bool String::operator!=(const String& Text){
+	if (this->Text != Text.Text) return true;
+	else return false;
+}
+// FUNCIONES
+void String::toCharArray(const char* Buffer, int Leng) {
+	//falta truncar
+	Buffer = Text.c_str();
+}
+void String::replace(const char* Busqueda, const char* Remplazo){
+	Funciones::RemplazarSTR(this->Text, Busqueda, Remplazo);
+}
+int String::length(){
+	return this->Text.length();
+}
+char String::charAt(int Position){
+	return this->Text[Position];
+}
+int String::indexOf(const String& Buscado, int Pos_ini){
+	int pos = this->Text.find(Buscado.Text, Pos_ini);
+	if (pos == string::npos) return -1;
+	else return pos;
+}
+String String::substring(int PosIni, int Longitud){
+	String tmp;
+	tmp.Text = this->Text.substr(PosIni, Longitud);
+	return tmp;
+}
+
+// funciones con String&
+String operator+(const String& Text1, const String& Text2){
+	String tmp;
+	tmp.Text = Text1.Text + Text2.Text;
+	return tmp;
 }
 
 //***************************************
@@ -248,6 +293,11 @@ void bitWrite(int &Value, int Bit_Number, bool Bit_Value){
 	Funciones::Bit_Write(Valor, Bit_Number, Bit_Value);
 	Value = Valor;
 }
+void bitWrite(char& Value, char Bit_Number, bool Bit_Value) {
+	char Valor = Value;
+	Funciones::Bit_Write(Valor, Bit_Number, Bit_Value);
+	Value = Valor;
+}
 //***************************************
 bool bitRead(char Value, int Position) {
 	return Funciones::Get_Bit(Value, Position);
@@ -363,4 +413,5 @@ int ObtenerPin(int Pin) {
 	if (Pin == 52) return 83;
 	if (Pin == 53) return 82;
 
+	return 0;
 }

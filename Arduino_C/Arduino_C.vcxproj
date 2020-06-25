@@ -103,7 +103,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\;..\Archivo\;..\Codigo_Arduino\;..\Arduino_C\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,7 +121,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\;..\Archivo\;..\Codigo_Arduino\;..\Arduino_C\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,7 +141,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\;..\Archivo\;..\Codigo_Arduino\;..\Arduino_C\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -163,7 +163,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\WinApi\;..\Funciones\;..\Archivo\;..\Codigo_Arduino\;..\Arduino_C\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -175,11 +175,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arduino.cpp" />
+    <ClCompile Include="C_Display.cpp" />
     <ClCompile Include="C_Pote.cpp" />
     <ClCompile Include="C_ShiftIn.cpp" />
     <ClCompile Include="C_ShiftOut.cpp" />
     <ClCompile Include="C_Switch.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="Source.cpp">
+      <FileType>CppClass</FileType>
+    </ClCompile>
     <ClCompile Include="WinMain.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreaded</RuntimeLibrary>
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MultiThreaded</RuntimeLibrary>
@@ -194,8 +197,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_Comunicacion.h" />
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_Control.h" />
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_GrupoChip.h" />
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_MultiLed.h" />
     <ClInclude Include="Arduino.h" />
     <ClInclude Include="Arduino_PC.h" />
+    <ClInclude Include="C_Display.h" />
     <ClInclude Include="C_Pote.h" />
     <ClInclude Include="C_ShiftIn.h" />
     <ClInclude Include="C_ShiftOut.h" />
@@ -204,6 +212,20 @@
     <ClInclude Include="Frame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Codigo_Arduino\1_Placa1.cpp">
+      <FileType>CppCode</FileType>
+      <DeploymentContent>false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </DeploymentContent>
+    </ClCompile>
+    <None Include="..\Codigo_Arduino\Recursos\C_Comunicacion.ino" />
+    <None Include="..\Codigo_Arduino\Recursos\C_MultiLed.ino" />
     <None Include="..\readme.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

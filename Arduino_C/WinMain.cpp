@@ -44,9 +44,11 @@
 #ifdef _DEBUG
 #pragma comment (lib, "WinApi_d.lib")
 #pragma comment (lib, "Funciones_d.lib")
+#pragma comment (lib, "Archivo_d.lib")
 #else
 #pragma comment (lib, "WinApi.lib")
 #pragma comment (lib, "Funciones.lib")
+#pragma comment (lib, "Archivo.lib")
 #endif
 
 int CALLBACK WINAPI WinMain(
@@ -58,7 +60,7 @@ int CALLBACK WINAPI WinMain(
 	CrearObjetos(hInstance);
 	WinApi->Draw();
 
-	//Configurar_objetos();
+	Configurar_objetos();
 	Eventos();
 
 	WinApi->Loop();

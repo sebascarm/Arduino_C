@@ -15,9 +15,6 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
-      <Filter>Arduino</Filter>
-    </ClCompile>
     <ClCompile Include="Arduino.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -32,6 +29,12 @@
     </ClCompile>
     <ClCompile Include="C_ShiftIn.cpp">
       <Filter>Main\compuesto</Filter>
+    </ClCompile>
+    <ClCompile Include="C_Display.cpp">
+      <Filter>Main\compuesto</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Arduino</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +62,32 @@
     <ClInclude Include="C_ShiftIn.h">
       <Filter>Main\compuesto</Filter>
     </ClInclude>
+    <ClInclude Include="C_Display.h">
+      <Filter>Main\compuesto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_MultiLed.h">
+      <Filter>Arduino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_Comunicacion.h">
+      <Filter>Arduino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_Control.h">
+      <Filter>Arduino</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codigo_Arduino\Clases\C_GrupoChip.h">
+      <Filter>Arduino</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\readme.md" />
+    <None Include="..\Codigo_Arduino\1_Placa1.cpp">
+      <Filter>Arduino</Filter>
+    </None>
+    <None Include="..\Codigo_Arduino\Recursos\C_MultiLed.ino">
+      <Filter>Arduino</Filter>
+    </None>
+    <None Include="..\Codigo_Arduino\Recursos\C_Comunicacion.ino">
+      <Filter>Arduino</Filter>
+    </None>
   </ItemGroup>
 </Project>

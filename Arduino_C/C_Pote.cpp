@@ -18,6 +18,7 @@ void C_Pote::Create(Win_Frame* pFrame, string text, int x, int y) {
 	Boton_menos->Create(pFrame, "-", x + 32, y, 20);
 	Boton_mas->Create(pFrame, "+", x + 54, y, 20);
 	Textbox->Create(pFrame, "", x + 76, y, 20, 20);
+	Textbox->Set_Text_Size(11);
 	Circulo->Set_BackColor(RGB(140, 140, 140));
 
 	BOT_ID_menos = Boton_menos->Get_ID();
@@ -29,6 +30,12 @@ void C_Pote::Create(Win_Frame* pFrame, string text, int x, int y) {
 	Boton_menos->Assign_Event_Click_ID(Event_Click_menos);
 	Boton_mas->Assign_Event_Click_ID(Event_Click_mas);
 	Textbox->Assign_Event_Text_Change_ID(Event_Text);
+}
+
+void C_Pote::Set_Pin(string Pin){
+	Textbox->Set_Text(Pin);
+	if (Pin == "") this->Pin = -1;
+	else this->Pin = Funciones::To_Integer(Pin);
 }
 
 // Funciones estaticas				

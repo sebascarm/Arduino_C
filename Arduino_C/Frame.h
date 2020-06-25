@@ -1,10 +1,12 @@
 #pragma once
 
 #include "WinApi.h"
+#include "Archivo.h"
 #include "c_switch.h"
 #include "C_Pote.h"
 #include "C_ShiftOut.h"
 #include "C_ShiftIn.h"
+#include "C_Display.h"
 
 //******************************************************************//
 //**** VARIABLES GLOBALES										****//
@@ -19,6 +21,8 @@ bool	PAUSA		= false;
 //******************************************************************//
 //**** OBJETOS GLOBALES											****//
 //******************************************************************//
+Archivo* ARCHIVO = New_File();
+
 Win_Api*	WinApi = New_Api();
 Win_Frame*	Frame1 = New_Frame();
 Win_Menu*	Menu1 = New_Menu();
@@ -46,6 +50,10 @@ C_Switch CSwitch[3];
 C_Pote	 CPote[3];
 C_ShiftOut CShiftOut[3];
 C_ShiftIn  CShiftIn[3];
+C_Display  CDisplay[3];
+// Macro Compuesto
+C_ShiftOut MShiftOut[18];
+C_Display  MDisplay[18];
 
 //******************************************************************//
 //**** CREAR OBJETOS											****//
@@ -53,7 +61,7 @@ C_ShiftIn  CShiftIn[3];
 void CrearObjetos(HINSTANCE hInstance) {
 	//Principal
 	WinApi->Create(hInstance);
-	Frame1->Create(WinApi, "Titulo", 50, 50, 1100, 540, true);
+	Frame1->Create(WinApi, "Titulo", 0, 50, 1900, 900, true);
 	Menu1->Create(Frame1, "Menú", { "Menu 1", "-", "Salir" });
 	//Grupo1
 	Boton_Iniciar->Create(Frame1, "Iniciar", 260, 30);
@@ -80,6 +88,17 @@ void CrearObjetos(HINSTANCE hInstance) {
 	CShiftOut[1].Create(Frame1, "SH-2", 420, 380);
 	CShiftOut[2].Create(Frame1, "SH-3", 540, 380);
 	CShiftIn[0].Create(Frame1, "IN-1", 660, 380);
+	CDisplay[0].Create(Frame1, "", 300, 520);
+	CDisplay[1].Create(Frame1, "", 420, 520);
+	CDisplay[2].Create(Frame1, "", 540, 520);
+	// Macro Compuesto
+	for (int i = 0; i < 18; i++) {
+		string Text = "SH-M" + to_string(i);
+		int pos = 70 + (i * 100);
+		MShiftOut[i].Create(Frame1, Text, pos, 620);
+		MDisplay[i].Create(Frame1, "", pos, 750);
+	}
+
 
 	int x = 50, y=30;
 	Placa->Create(Frame1, S_Style::S_RECTANGLE, x, y, 200, 320);

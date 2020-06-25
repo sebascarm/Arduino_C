@@ -20,6 +20,7 @@ public:
 	int	BOT_ID = 0;
 	int	TEX_ID = 0;
 	void Create(Win_Frame* pFrame, string text, int x, int y);
+	void Set_Pin(string Pin);
 	int Pin = -1;
 	int State = 0; // 0 o 1	
 };

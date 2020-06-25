@@ -2,7 +2,9 @@
 
 #include <Windows.h>  // Para sleep
 #include <string>
+
 using namespace std;
+
 
 #define INPUT "INPUT"
 #define OUTPUT "OUTPUT"
@@ -34,23 +36,26 @@ using namespace std;
 
 #define byte char
 
+
 void iniciar();
 
 void setup();
 void loop();
 void serialEvent();
 
-
 int ObtenerPin(int Pin);
 void Conexiones();
 
+class String;
 
 class _Serial {
 public:
 	void begin(int x);
-	void print(string x);
+	void print(const char* x);
+	void print(String Text);
 	void print(int x);
-	void println(string x);
+	void println(const char* x);
+	void println(String Text);
 	void println(int x);
 
 	int	 available();
@@ -59,19 +64,35 @@ public:
 
 
 
-
 class String {
-private:
-	string Text;
 public:
+	
 	String();
-	String(string Text);
-	String(const char* Text);
-	String& operator = (const char* Text);
-	String& operator += (char Char);
-	void toCharArray(const char* Buffer, int Leng);
-};
+	String(const char*);
+	String(int Text);
+	String(const String&);
 
+	String	operator = (const String&);
+	String	operator + (const String&);
+	
+	String&	operator += (char Char);
+	//bool	operator == (const char*);			// Para comparar igualdad
+	bool	operator == (const String& Text);	// Para comparar igualdad
+	bool	operator != (const String& Text);	// Para comparar diferencia
+	//bool	operator != (const char*);			// Para comparar diferencia
+		
+	void	toCharArray(const char* Buffer, int Leng);
+	void	replace(const char* Busqueda, const char* Remplazo);
+	int		length();
+	char	charAt(int Position);
+	int		indexOf(const String& Buscado, int Pos_ini=0);
+	String substring(int PosIni, int Longitud = 1);
+	
+	string Text;
+
+	//String operator+=(const String&);
+};
+String operator +(const String& Text1, const String& Text2);  // Para la suma en una asignacion con comillas
 
 
 //DIGITAL I/O					
@@ -79,8 +100,8 @@ int		digitalRead(int Pin);
 void	digitalWrite(int Pin, bool Value);
 void	pinMode(int Pin, string Conector);
 //ANALOG I/O					
-int analogRead(int Pin);
-void analogWrite(int pin, int Value);
+int		analogRead(int Pin);
+void	analogWrite(int pin, int Value);
 
 //Advanced I / O				
 //	noTone()		
@@ -136,7 +157,8 @@ int	map(int Value, int fromLow, int fromHigh, int toLow, int toHigh);
 //	bitClear()
 bool bitRead(char Value, int Position);
 //	bitSet()
-void bitWrite(int &Value, int Bit_Number, bool Bit_Value);
+//	void bitWrite(int &Value, int Bit_Number, bool Bit_Value);
+void bitWrite(char& Value, char Bit_Number, bool Bit_Value);
 //	highByte()
 //	lowByte()
 

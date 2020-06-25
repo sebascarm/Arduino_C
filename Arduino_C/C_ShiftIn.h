@@ -48,6 +48,9 @@ public:
 	int TEX_ID_CLOCK = 0;
 	//char Pin_Val = 0;
 	void Create(Win_Frame* pFrame, string text, int x, int y);
+	void Set_Pin_Data(string Pin);
+	void Set_Pin_Latch(string Pin);
+	void Set_Pin_Clock(string Pin);
 	int PinData = -1;
 	int PinLatch = -1;
 	int PinClock = -1;
